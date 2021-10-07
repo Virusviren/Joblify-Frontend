@@ -1,0 +1,10 @@
+.searchbar-icons {
+  width: 1.5rem;
+  padding-left: 1rem;
+}
+.searchbar-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: large;
+}

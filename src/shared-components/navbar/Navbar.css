@@ -1,0 +1,15 @@
+.nav-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.nav-link-active a {
+  color: #4640de !important;
+  border-bottom: 4px solid #4640de;
+  padding-bottom: 36px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
