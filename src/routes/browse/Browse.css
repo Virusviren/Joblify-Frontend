@@ -8,3 +8,43 @@
   outline: none;
   font-size: large;
 }
+
+.type-tag {
+  padding: 0.5rem 1rem;
+  background-color: #e1e1e1;
+  color: #f23b50;
+  border-radius: 10px;
+}
+.level-tag {
+  padding: 0.5rem 1rem;
+  background-color: #e1e1e1;
+  color: #4640de;
+  border-radius: 10px;
+}
+.job-card {
+  background-color: white;
+}
+.job-card-active {
+  background-color: #4640de;
+  color: white;
+}
+
+.job-card-active img {
+  border: 3px solid white;
+  padding: 0.5rem;
+}
+
+.job-card-active span {
+  background-color: #6964df;
+  color: white;
+}
+.job-details {
+  border-radius: 10px;
+}
+
+.job-details-background {
+  background-image: url('../../static/icons/companyBackground.png');
+  background-repeat: no-repeat;
+  height: 10rem;
+  border-radius: 10px 10px 0 0;
+}

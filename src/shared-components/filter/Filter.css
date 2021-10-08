@@ -1,0 +1,18 @@
+.filter-item-count-unchecked {
+  padding: 5px;
+  background-color: #e1e1e1;
+  color: #686868;
+  border-radius: 5px;
+}
+
+.filter-item-count-checked {
+  padding: 5px;
+  background-color: #4640de;
+  color: #4640de;
+  border-radius: 5px;
+}
+
+.filter {
+  background-color: #ececec;
+  box-shadow: none;
+}
