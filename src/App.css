@@ -3,3 +3,10 @@
   margin: 0;
   font-family: 'Nunito', sans-serif !important;
 }
+@media (max-width: 1535px) {
+  h2,
+  h3,
+  h4 p {
+    font-size: large;
+  }
+}

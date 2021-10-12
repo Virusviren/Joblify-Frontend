@@ -1,9 +1,11 @@
 import { Button, Grid } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import CompanyBackground from '../../../static/icons/companyBackground.svg';
 import CompanyLogo from '../../../static/icons/companyLogo.svg';
+import ApplicationForm from './ApplicationForm';
 
 const JobDetails = () => {
+  const [open, setOpen] = useState(false);
   return (
     <Grid container className='job-details'>
       <Grid container className='job-details-background'>
@@ -23,7 +25,6 @@ const JobDetails = () => {
           }}
         />
       </Grid>
-
       <Grid
         container
         paddingLeft={4}
@@ -41,23 +42,24 @@ const JobDetails = () => {
 
             margin: '2rem 0 2rem auto',
           }}
+          onClick={() => setOpen(true)}
         >
           Apply
         </Button>
 
         <Grid container alignItems='center'>
-          <Grid item lg={9}>
+          <Grid item xl={9} lg={8}>
             <h3>SEnior frontend developer</h3>
           </Grid>
-          <Grid item lg={3}>
+          <Grid item xl={3} lg={4}>
             <p style={{ color: '#686868' }}>Posted 8 days ago</p>
           </Grid>
         </Grid>
         <Grid container alignItems='center' marginTop={2} marginBottom={6}>
-          <Grid item lg={9}>
+          <Grid item xl={9} lg={8}>
             <p>Berlin Germany</p>
           </Grid>
-          <Grid item lg={3}>
+          <Grid item xl={3} lg={4}>
             <p>247 Applicants</p>
           </Grid>
         </Grid>
@@ -67,21 +69,21 @@ const JobDetails = () => {
           marginBottom={6}
           style={{ border: '2px solid #e1e1e1', borderRadius: '10px' }}
         >
-          <Grid item lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
+          <Grid item xl={3} lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Experience</p>
             <h4 style={{ padding: '0 1rem 1rem' }}>Minium 1 year</h4>
           </Grid>
-          <Grid item lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
+          <Grid item xl={3} lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>
               Seniority Level
             </p>
             <h4 style={{ padding: '0 1rem 1rem' }}>Senior</h4>
           </Grid>
-          <Grid item lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
+          <Grid item xl={3} lg={3}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Job Type</p>
             <h4 style={{ padding: '0 1rem 1rem' }}>Fulltime</h4>
           </Grid>
-          <Grid item lg={3}>
+          <Grid item xl={3} lg={3} style={{ borderLeft: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Salary</p>
             <h4 style={{ padding: '0 1rem 1rem' }}>$3000 / month</h4>
           </Grid>
@@ -107,6 +109,7 @@ const JobDetails = () => {
           culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </Grid>
+      <ApplicationForm open={open} setOpen={setOpen} />
     </Grid>
   );
 };

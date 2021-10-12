@@ -18,7 +18,7 @@ const Navbar = () => {
         marginTop={3}
         marginBottom={3}
       >
-        <Grid item lg={'auto'}>
+        <Grid item xl={'auto'} lg={'auto'}>
           <Grid container justifyItems='center'>
             {/* LOGO */}
             <Grid item>
@@ -26,7 +26,7 @@ const Navbar = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item lg={6}>
+        <Grid item xl={6} lg={6}>
           <Grid container justifyContent='center' gap={3}>
             {/* For the links */}
             <Grid
@@ -67,7 +67,7 @@ const Navbar = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item lg={'auto'}>
+        <Grid item xl={'auto'} lg={'auto'}>
           <Grid container alignItems='center' justifyItems='center' gap={3}>
             <Grid
               item

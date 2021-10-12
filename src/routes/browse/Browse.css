@@ -48,3 +48,10 @@
   height: 10rem;
   border-radius: 10px 10px 0 0;
 }
+
+.submit-application-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}

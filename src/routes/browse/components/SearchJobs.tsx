@@ -1,25 +1,27 @@
 import { Button, Grid } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
 import SearchIcon from '../../../static/icons/search.svg';
 import JobIcon from '../../../static/icons/suitcase.svg';
 import SalaryIcon from '../../../static/icons/salary.svg';
 
 const SearchJobs = () => {
+  const matches = useMediaQuery('(max-width:1535px)');
   return (
     <Grid
       container
       style={{
         backgroundColor: 'white',
-        margin: '2rem 10rem',
+        margin: matches ? '2rem 5rem' : '2rem 10rem',
         borderRadius: '10px',
       }}
       alignItems='center'
     >
-      <Grid item lg={3}>
+      <Grid item xl={3} lg={3}>
         <Grid
           container
           alignItems='center'
-          gap={2}
+          gap={matches ? 0 : 2}
           paddingTop={2}
           paddingBottom={2}
         >
@@ -28,9 +30,10 @@ const SearchJobs = () => {
               className='searchbar-icons'
               src={SearchIcon}
               alt='SearchIcon'
+              style={{ marginRight: matches ? '1rem' : '0' }}
             />
           </Grid>
-          <Grid item style={{ width: '85%' }}>
+          <Grid item style={{ width: matches ? '75%' : '85%' }}>
             <input
               className='searchbar-input'
               placeholder='Search'
@@ -39,12 +42,17 @@ const SearchJobs = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item lg={3}>
-        <Grid container alignItems='center' gap={2}>
+      <Grid item xl={3} lg={3}>
+        <Grid container alignItems='center' gap={matches ? 0 : 2}>
           <Grid item>
-            <img className='searchbar-icons' src={JobIcon} alt='SearchIcon' />
+            <img
+              className='searchbar-icons'
+              src={JobIcon}
+              alt='SearchIcon'
+              style={{ marginRight: matches ? '1rem' : '0' }}
+            />
           </Grid>
-          <Grid item style={{ width: '85%' }}>
+          <Grid item style={{ width: matches ? '75%' : '85%' }}>
             <input
               className='searchbar-input'
               placeholder='Job Type'
@@ -53,16 +61,17 @@ const SearchJobs = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item lg={3}>
-        <Grid container alignItems='center' gap={2}>
+      <Grid item xl={3} lg={3}>
+        <Grid container alignItems='center' gap={matches ? 0 : 2}>
           <Grid item>
             <img
               className='searchbar-icons'
               src={SalaryIcon}
               alt='SearchIcon'
+              style={{ marginRight: matches ? '1rem' : '0' }}
             />
           </Grid>
-          <Grid item style={{ width: '85%' }}>
+          <Grid item style={{ width: matches ? '75%' : '85%' }}>
             <input
               className='searchbar-input'
               placeholder='Salary Range'
@@ -71,7 +80,7 @@ const SearchJobs = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item lg={3} style={{ height: '100%' }}>
+      <Grid item xl={3} lg={3} style={{ height: '100%' }}>
         <Button
           variant='contained'
           fullWidth

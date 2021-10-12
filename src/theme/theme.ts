@@ -15,6 +15,8 @@ export interface Palette {
 }
 export interface PrimaryOrSecondaryOrErrorOrSuccessOrInfo {
   main: string;
+  light?: string;
+  dark?: string;
 }
 export interface Text {
   primary: string;
@@ -30,7 +32,7 @@ const themeOptions: ThemeOptions = {
       main: '#4640de',
     },
     secondary: {
-      main: '#333333',
+      main: '#e5e5e5',
     },
     error: {
       main: '#f23b50',
