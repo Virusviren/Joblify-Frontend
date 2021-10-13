@@ -3,10 +3,17 @@ import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import Logo from '../../static/icons/Logo.svg';
 import { Link, useLocation } from 'react-router-dom';
+import LoginModal from './LoginModal';
 import './Navbar.css';
+import RegistrationModal from './RegistrationModal';
+
 const Navbar = () => {
   let location = useLocation();
   console.log(location.pathname);
+  const [LoginModalOpen, setLoginModalOpen] = useState(false);
+  const [RegisterModalOpen, setRegisterModalOpen] = useState(false);
+  const [toggleModal, setToggleModal] = useState('Login');
+  console.log(toggleModal);
 
   return (
     <>
@@ -88,6 +95,7 @@ const Navbar = () => {
                   padding: '0.5rem 3rem',
                   textTransform: 'capitalize',
                 }}
+                onClick={() => setLoginModalOpen(true)}
               >
                 Login
               </Button>
@@ -95,6 +103,20 @@ const Navbar = () => {
           </Grid>
         </Grid>
       </Grid>
+      <LoginModal
+        LoginModalOpen={LoginModalOpen}
+        setLoginModalOpen={setLoginModalOpen}
+        toggleLoginAndRegistrationModal={setToggleModal}
+        setRegisterModalOpen={setRegisterModalOpen}
+      />
+      {toggleModal === 'register' && (
+        <RegistrationModal
+          setLoginModalOpen={setLoginModalOpen}
+          RegisterModalOpen={RegisterModalOpen}
+          setRegisterModalOpen={setRegisterModalOpen}
+          toggleLoginAndRegistrationModal={setToggleModal}
+        />
+      )}
       <hr
         style={{
           height: '2.5px',

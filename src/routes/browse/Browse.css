@@ -54,4 +54,14 @@
   outline: 0;
   background: transparent;
   border-bottom: 1px solid black;
+  font-weight: bold;
+  color: black;
+  font-size: large;
+  width: 90%;
+  padding-top: 1rem;
+}
+
+.input-title {
+  font-weight: bold;
+  color: #686868;
 }
