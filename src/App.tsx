@@ -6,6 +6,9 @@ import About from './routes/about/About';
 import Faq from './routes/faq/Faq';
 import Contact from './routes/contact/Contact';
 import Browse from './routes/browse/Browse';
+import Hr from './routes/hr/Hr';
+import JobList from './routes/hr/components/JobList';
+import PersonalInfo from './routes/hr/components/PersonalInfo';
 
 function App() {
   return (
@@ -16,6 +19,9 @@ function App() {
         <Route exact path='/faq' component={Faq} />
         <Route exact path='/contact' component={Contact} />
         <Route exact path='/browse' component={Browse} />
+        <Route exact path='/hr/applications' component={Hr} />
+        <Route exact path='/hr/job-list' component={JobList} />
+        <Route exact path='/hr/personal-info' component={PersonalInfo} />
       </Grid>
     </Router>
   );

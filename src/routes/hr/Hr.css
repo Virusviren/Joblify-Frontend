@@ -1,0 +1,33 @@
+.side-menu-active-icon {
+  color: #4640de !important;
+  /* border-left: 5px solid #4640de; */
+}
+.side-menu-icon {
+  color: #686868;
+}
+
+.side-menu-active-link {
+  color: #4640de !important;
+  text-decoration: none;
+  font-weight: bold;
+}
+.side-menu-link {
+  color: #686868;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.active-menu-item {
+  border-left: 8px solid #4640de;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+.inactive-menu-item {
+  border-left: 8px solid white;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
+.highlight-candidate:hover {
+  background-color: #ecebff;
+}

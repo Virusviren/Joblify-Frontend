@@ -53,3 +53,14 @@ export const salaryRanges = [
     numberOfOptions: 40,
   },
 ];
+
+export const hrFilter = [
+  {
+    name: 'Show rejected applications',
+    numberOfOptions: 50,
+  },
+  {
+    name: 'Show all applications',
+    numberOfOptions: 10,
+  },
+];

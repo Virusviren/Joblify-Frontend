@@ -1,0 +1,23 @@
+.round-circle-inactive {
+  width: 1rem;
+  border-radius: 50%;
+  height: 1rem;
+  background-color: #b8b8b8;
+}
+.round-line-inactive {
+  width: 1rem;
+  height: 0.5rem;
+  background-color: #b8b8b8;
+}
+
+.round-circle-active {
+  width: 1rem;
+  border-radius: 50%;
+  height: 1rem;
+  background-color: #4640de;
+}
+.round-line-active {
+  width: 1rem;
+  height: 0.5rem;
+  background-color: #4640de;
+}
