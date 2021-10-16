@@ -30,4 +30,5 @@
 
 .highlight-candidate:hover {
   background-color: #ecebff;
+  border-radius: 10px;
 }

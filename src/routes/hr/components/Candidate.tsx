@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import candidatePic from '../../../static/icons/viren.jpg';
 import RoundInfo from '../../../shared-components/roundInfo/RoundInfo';
+import ViewApplication from './ViewApplication';
+import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
 const Candidate = () => {
+  const [open, setOpen] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
   return (
     <Grid container padding={2} className='highlight-candidate'>
       <Grid item xl={'auto'} lg={'auto'}>
@@ -44,7 +48,11 @@ const Candidate = () => {
           View
         </p>
 
-        <VisibilityIcon style={{ fontSize: '2rem' }} color='primary' />
+        <VisibilityIcon
+          style={{ fontSize: '2rem', cursor: 'pointer' }}
+          color='primary'
+          onClick={() => setOpen(true)}
+        />
       </Grid>
       <Grid item xl={1} lg={1} textAlign='center'>
         <p
@@ -55,8 +63,19 @@ const Candidate = () => {
         >
           Reject
         </p>
-        <CancelOutlinedIcon style={{ fontSize: '2rem' }} color='error' />
+        <CancelOutlinedIcon
+          style={{ fontSize: '2rem', cursor: 'pointer' }}
+          color='error'
+          onClick={() => setOpenConfirmation(true)}
+        />
       </Grid>
+      <ViewApplication open={open} setOpen={setOpen} />
+      <UserActionConfirmation
+        title={'Are You Sure ?'}
+        message={'Do you want to reject it'}
+        open={openConfirmation}
+        setOpen={setOpenConfirmation}
+      />
     </Grid>
   );
 };
