@@ -6,7 +6,7 @@ import {
   FormControl,
   Button,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../../static/icons/Logo.svg';
 import SideMenu from './SideMenu';
@@ -23,8 +23,10 @@ import Filter from '../../../shared-components/filter/Filter';
 
 import CustomPagination from '../../../shared-components/pagination/CustomPagination';
 import Job from './Job';
+import AddJob from './AddJob';
 
 const JobList = () => {
+  const [open, setOpen] = useState(false);
   return (
     <Grid container>
       <Grid
@@ -161,6 +163,7 @@ const JobList = () => {
                     textTransform: 'capitalize',
                   }}
                   startIcon={<AddCircleOutlineIcon />}
+                  onClick={() => setOpen(true)}
                 >
                   Add
                 </Button>
@@ -175,6 +178,7 @@ const JobList = () => {
           </Grid>
         </Grid>
       </Grid>
+      <AddJob open={open} setOpen={setOpen} />
     </Grid>
   );
 };
