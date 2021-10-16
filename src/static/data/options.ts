@@ -64,3 +64,18 @@ export const hrFilter = [
     numberOfOptions: 10,
   },
 ];
+
+export const jobFilter = [
+  {
+    name: 'Show closed jobs',
+    numberOfOptions: 50,
+  },
+  {
+    name: 'Show open jobs',
+    numberOfOptions: 10,
+  },
+  {
+    name: 'Show all jobs',
+    numberOfOptions: 60,
+  },
+];

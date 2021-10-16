@@ -126,7 +126,7 @@ const Hr = () => {
             }}
           >
             {/* DropDown menu */}
-            <FormControl sx={{ width: '10%', marginBottom: '2.5rem' }}>
+            <FormControl sx={{ width: '20%', marginBottom: '2.5rem' }}>
               <InputLabel id='demo-simple-select-label'>Sort by</InputLabel>
               <Select
                 labelId='demo-simple-select-label'
