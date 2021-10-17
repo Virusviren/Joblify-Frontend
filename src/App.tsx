@@ -21,7 +21,9 @@ function App() {
         <Route exact path='/faq' component={Faq} />
         <Route exact path='/contact' component={Contact} />
         <Route exact path='/browse' component={Browse} />
-        <Route path='/hr-applications' component={Hr} />
+        <Route path='/hr-applications'>
+          <Hr />
+        </Route>
         <Route path='/hr-job-list' component={JobList} />
         <Route path='/hr-personal-info' component={PersonalInfo} />
         <Route path='/candidate-applied-job' component={CandidateAppliedJobs} />
