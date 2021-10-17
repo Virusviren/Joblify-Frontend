@@ -20,13 +20,9 @@ const MainSection = () => {
   const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
     fetch(`${BASE_URL}all-jobs`).then((res) => res.json())
   );
-  console.log(typeof data[0]._id);
-  console.log(isFetching);
 
   const [activeJobCardId, setActiveJobCardId] = useState('');
-  useEffect(() => {
-    setActiveJobCardId(data[0]._id);
-  }, [isFetching]);
+
   return (
     <Grid
       container
