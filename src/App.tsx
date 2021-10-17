@@ -17,15 +17,15 @@ function App() {
     <Router>
       <Grid container>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Hr} />
           <Route exact path='/about' component={About} />
           <Route exact path='/faq' component={Faq} />
           <Route exact path='/contact' component={Contact} />
           <Route exact path='/browse' component={Browse} />
 
-          <Route exact path='/hr-applications'>
+          {/* <Route exact path='/hr-applications'>
             <Hr />
-          </Route>
+          </Route> */}
 
           <Route exact path='/hr-job-list' component={JobList} />
           <Route exact path='/hr-personal-info' component={PersonalInfo} />
