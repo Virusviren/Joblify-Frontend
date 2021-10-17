@@ -16,7 +16,17 @@ interface IPROPS {
 }
 const UserActionConfirmation = ({ open, setOpen, title, message }: IPROPS) => {
   return (
-    <Dialog open={open} maxWidth='xl' disableEscapeKeyDown={true}>
+    <Dialog
+      open={open}
+      maxWidth='xl'
+      disableEscapeKeyDown={true}
+      BackdropProps={{
+        style: {
+          backdropFilter: 'blur(15px)',
+          background: 'rgba(196, 196, 196, 0.5)',
+        },
+      }}
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{message}</DialogContentText>

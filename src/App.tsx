@@ -9,6 +9,8 @@ import Browse from './routes/browse/Browse';
 import Hr from './routes/hr/Hr';
 import JobList from './routes/hr/components/JobList';
 import PersonalInfo from './routes/hr/components/PersonalInfo';
+import CandidateAppliedJobs from './routes/candidate/CandidateAppliedJobs';
+import CandidatePersonalInfo from './routes/candidate/CandidatePersonalInfo';
 
 function App() {
   return (
@@ -22,6 +24,16 @@ function App() {
         <Route exact path='/hr/applications' component={Hr} />
         <Route exact path='/hr/job-list' component={JobList} />
         <Route exact path='/hr/personal-info' component={PersonalInfo} />
+        <Route
+          exact
+          path='/candidate/applied-job'
+          component={CandidateAppliedJobs}
+        />
+        <Route
+          exact
+          path='/candidate/personalInfo'
+          component={CandidatePersonalInfo}
+        />
       </Grid>
     </Router>
   );

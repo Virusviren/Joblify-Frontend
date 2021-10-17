@@ -25,7 +25,17 @@ const LoginModal = ({
   console.log('open');
 
   return (
-    <Dialog open={LoginModalOpen} disableEscapeKeyDown={true} maxWidth='xl'>
+    <Dialog
+      open={LoginModalOpen}
+      disableEscapeKeyDown={true}
+      maxWidth='xl'
+      BackdropProps={{
+        style: {
+          backdropFilter: 'blur(15px)',
+          background: 'rgba(196, 196, 196, 0.5)',
+        },
+      }}
+    >
       <Grid container justifyContent='flex-end' paddingRight={2} paddingTop={2}>
         <img
           src={deleteIcon}
@@ -96,7 +106,13 @@ const LoginModal = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container xl={12} lg={12} justifyContent='center'>
+        <Grid
+          container
+          xl={12}
+          lg={12}
+          justifyContent='center'
+          marginBottom={4}
+        >
           <Button
             variant='contained'
             color='primary'

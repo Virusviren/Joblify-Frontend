@@ -21,7 +21,17 @@ interface IPROPS {
 const AddJob = ({ open, setOpen }: IPROPS) => {
   const [OpenUserConfirmation, setOpenUserConfirmation] = useState(false);
   return (
-    <Dialog open={open} disableEscapeKeyDown={true} maxWidth='lg'>
+    <Dialog
+      open={open}
+      disableEscapeKeyDown={true}
+      maxWidth='lg'
+      BackdropProps={{
+        style: {
+          backdropFilter: 'blur(15px)',
+          background: 'rgba(196, 196, 196, 0.5)',
+        },
+      }}
+    >
       <DialogTitle style={{ padding: '1.5rem 3rem' }}>
         <Grid container justifyContent='space-between'>
           <Grid item>

@@ -5,12 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Grid, Divider } from '@mui/material';
-import deleteIcon from '../../../static/icons/delete.svg';
-import addIcon from '../../../static/icons/addIcon.svg';
+import deleteIcon from '../../static/icons/delete.svg';
+import addIcon from '../../static/icons/addIcon.svg';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
-import Me from '../../../static/icons/viren.jpg';
-import Skills from './Skills';
+import Me from '../../static/icons/viren.jpg';
+import CandidateSkills from './CandidateSkills';
 interface IPROPS {
   open: boolean;
   setOpen(open: boolean): any;
@@ -19,7 +19,7 @@ interface IPROPS {
 const Input = styled('input')({
   display: 'none',
 });
-const ViewApplication = ({ open, setOpen }: IPROPS) => {
+const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
   return (
     <Dialog
       open={open}
@@ -280,7 +280,7 @@ const ViewApplication = ({ open, setOpen }: IPROPS) => {
             marginRight: '3rem',
           }}
         >
-          <Skills />
+          <CandidateSkills />
         </Grid>
 
         <Divider style={{ marginBottom: '2rem' }} />
@@ -386,23 +386,7 @@ const ViewApplication = ({ open, setOpen }: IPROPS) => {
               Current stage - 1st Round
             </Button>
           </Grid>
-          <Grid item>
-            <Button
-              onClick={() => setOpen(false)}
-              variant='contained'
-              color='success'
-              style={{
-                borderRadius: '10px',
-                padding: '0.5rem 3rem',
-                textTransform: 'capitalize',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '1.1rem',
-              }}
-            >
-              Proceed to next stage
-            </Button>
-          </Grid>
+
           <Grid item>
             {' '}
             <Button
@@ -417,7 +401,7 @@ const ViewApplication = ({ open, setOpen }: IPROPS) => {
                 fontSize: '1.1rem',
               }}
             >
-              Reject
+              Withdraw
             </Button>
           </Grid>
         </Grid>
@@ -426,4 +410,4 @@ const ViewApplication = ({ open, setOpen }: IPROPS) => {
   );
 };
 
-export default ViewApplication;
+export default CandidateViewApplication;

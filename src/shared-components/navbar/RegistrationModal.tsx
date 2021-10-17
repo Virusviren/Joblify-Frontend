@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Grid,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 interface IPROPS {
   RegisterModalOpen: boolean;
@@ -23,8 +24,24 @@ const RegistrationModal = ({
   setLoginModalOpen,
 }: IPROPS) => {
   return (
-    <Dialog open={RegisterModalOpen} disableEscapeKeyDown={true} maxWidth='xl'>
-      <Grid container justifyContent='flex-end' paddingRight={2} paddingTop={2}>
+    <Dialog
+      open={RegisterModalOpen}
+      disableEscapeKeyDown={true}
+      maxWidth='md'
+      BackdropProps={{
+        style: {
+          backdropFilter: 'blur(15px)',
+          background: 'rgba(196, 196, 196, 0.5)',
+        },
+      }}
+    >
+      <Grid
+        container
+        justifyContent='flex-end'
+        paddingRight={2}
+        paddingTop={2}
+        style={{ zIndex: 10 }}
+      >
         <img
           src={deleteIcon}
           alt='close img'
@@ -136,7 +153,13 @@ const RegistrationModal = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container xl={12} lg={12} justifyContent='center'>
+        <Grid
+          container
+          xl={12}
+          lg={12}
+          justifyContent='center'
+          marginBottom={4}
+        >
           <Grid item xl={12} lg={12} textAlign='center'>
             <Button
               variant='contained'
