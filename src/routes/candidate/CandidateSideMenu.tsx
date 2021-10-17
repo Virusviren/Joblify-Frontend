@@ -18,7 +18,7 @@ const CandidateSideMenu = () => {
         <Grid
           item
           className={
-            location.pathname === '/candidate/applied-job'
+            location.pathname === '/candidate-applied-job'
               ? 'active-menu-item'
               : 'inactive-menu-item'
           }
@@ -26,7 +26,7 @@ const CandidateSideMenu = () => {
           <PeopleIcon
             style={{ fontSize: '2rem', paddingLeft: '1rem' }}
             className={
-              location.pathname === '/candidate/applied-job'
+              location.pathname === '/candidate-applied-job'
                 ? 'side-menu-active-icon'
                 : 'side-menu-icon'
             }
@@ -35,9 +35,9 @@ const CandidateSideMenu = () => {
         <Grid item>
           {' '}
           <Link
-            to='/candidate/applied-job'
+            to='/candidate-applied-job'
             className={
-              location.pathname === '/candidate/applied-job'
+              location.pathname === '/candidate-applied-job'
                 ? 'side-menu-active-link'
                 : 'side-menu-link'
             }
@@ -55,7 +55,7 @@ const CandidateSideMenu = () => {
         <Grid
           item
           className={
-            location.pathname === '/candidate/personalInfo'
+            location.pathname === '/candidate-personalInfo'
               ? 'active-menu-item'
               : 'inactive-menu-item'
           }
@@ -63,7 +63,7 @@ const CandidateSideMenu = () => {
           <PersonIcon
             style={{ fontSize: '2rem', paddingLeft: '1rem' }}
             className={
-              location.pathname === '/candidate/personalInfo'
+              location.pathname === '/candidate-personalInfo'
                 ? 'side-menu-active-icon'
                 : 'side-menu-icon'
             }
@@ -72,9 +72,9 @@ const CandidateSideMenu = () => {
         <Grid item>
           {' '}
           <Link
-            to='/candidate/personalInfo'
+            to='/candidate-personalInfo'
             className={
-              location.pathname === '/candidate/personalInfo'
+              location.pathname === '/candidate-personalInfo'
                 ? 'side-menu-active-link'
                 : 'side-menu-link'
             }
