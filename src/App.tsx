@@ -16,24 +16,28 @@ function App() {
   return (
     <Router>
       <Grid container>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/about' component={About} />
-        <Route exact path='/faq' component={Faq} />
-        <Route exact path='/contact' component={Contact} />
-        <Route exact path='/browse' component={Browse} />
         <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/faq' component={Faq} />
+          <Route exact path='/contact' component={Contact} />
+          <Route exact path='/browse' component={Browse} />
+
           <Route path='/hr-applications'>
             <Hr />
           </Route>
-        </Switch>
 
-        <Route path='/hr-job-list' component={JobList} />
-        <Route path='/hr-personal-info' component={PersonalInfo} />
-        <Route path='/candidate-applied-job' component={CandidateAppliedJobs} />
-        <Route
-          path='/candidate-personalInfo'
-          component={CandidatePersonalInfo}
-        />
+          <Route path='/hr-job-list' component={JobList} />
+          <Route path='/hr-personal-info' component={PersonalInfo} />
+          <Route
+            path='/candidate-applied-job'
+            component={CandidateAppliedJobs}
+          />
+          <Route
+            path='/candidate-personalInfo'
+            component={CandidatePersonalInfo}
+          />
+        </Switch>
       </Grid>
     </Router>
   );
