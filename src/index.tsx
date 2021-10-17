@@ -17,7 +17,6 @@ ReactDOM.render(
           <App />
         </ThemeProvider>
       </QueryClientProvider>
-      d
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

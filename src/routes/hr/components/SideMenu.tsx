@@ -18,7 +18,7 @@ const SideMenu = () => {
         <Grid
           item
           className={
-            location.pathname === '/hr/applications'
+            location.pathname === '/hr-applications'
               ? 'active-menu-item'
               : 'inactive-menu-item'
           }
@@ -26,7 +26,7 @@ const SideMenu = () => {
           <PeopleIcon
             style={{ fontSize: '2rem', paddingLeft: '1rem' }}
             className={
-              location.pathname === '/hr/applications'
+              location.pathname === '/hr-applications'
                 ? 'side-menu-active-icon'
                 : 'side-menu-icon'
             }
@@ -35,9 +35,9 @@ const SideMenu = () => {
         <Grid item>
           {' '}
           <Link
-            to='/hr/applications'
+            to='/hr-applications'
             className={
-              location.pathname === '/hr/applications'
+              location.pathname === '/hr-applications'
                 ? 'side-menu-active-link'
                 : 'side-menu-link'
             }
@@ -55,7 +55,7 @@ const SideMenu = () => {
         <Grid
           item
           className={
-            location.pathname === '/hr/job-list'
+            location.pathname === '/hr-job-list'
               ? 'active-menu-item'
               : 'inactive-menu-item'
           }
@@ -63,7 +63,7 @@ const SideMenu = () => {
           <WorkIcon
             style={{ fontSize: '2rem', paddingLeft: '1rem' }}
             className={
-              location.pathname === '/hr/job-list'
+              location.pathname === '/hr-job-list'
                 ? 'side-menu-active-icon'
                 : 'side-menu-icon'
             }
@@ -72,9 +72,9 @@ const SideMenu = () => {
         <Grid item>
           {' '}
           <Link
-            to='/hr/job-list'
+            to='/hr-job-list'
             className={
-              location.pathname === '/hr/job-list'
+              location.pathname === '/hr-job-list'
                 ? 'side-menu-active-link'
                 : 'side-menu-link'
             }
@@ -93,7 +93,7 @@ const SideMenu = () => {
         <Grid
           item
           className={
-            location.pathname === '/hr/personal-info'
+            location.pathname === '/hr-personal-info'
               ? 'active-menu-item'
               : 'inactive-menu-item'
           }
@@ -101,7 +101,7 @@ const SideMenu = () => {
           <PersonIcon
             style={{ fontSize: '2rem', paddingLeft: '1rem' }}
             className={
-              location.pathname === '/hr/personal-info'
+              location.pathname === '/hr-personal-info'
                 ? 'side-menu-active-icon'
                 : 'side-menu-icon'
             }
@@ -110,9 +110,9 @@ const SideMenu = () => {
         <Grid item>
           {' '}
           <Link
-            to='/hr/personal-info'
+            to='/hr-personal-info'
             className={
-              location.pathname === '/hr/personal-info'
+              location.pathname === '/hr-personal-info'
                 ? 'side-menu-active-link'
                 : 'side-menu-link'
             }

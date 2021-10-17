@@ -21,17 +21,17 @@ function App() {
         <Route exact path='/faq' component={Faq} />
         <Route exact path='/contact' component={Contact} />
         <Route exact path='/browse' component={Browse} />
-        <Route exact path='/hr/applications' component={Hr} />
-        <Route exact path='/hr/job-list' component={JobList} />
-        <Route exact path='/hr/personal-info' component={PersonalInfo} />
+        <Route exact path='/hr-applications' component={Hr} />
+        <Route exact path='/hr-job-list' component={JobList} />
+        <Route exact path='/hr-personal-info' component={PersonalInfo} />
         <Route
           exact
-          path='/candidate/applied-job'
+          path='/candidate-applied-job'
           component={CandidateAppliedJobs}
         />
         <Route
           exact
-          path='/candidate/personalInfo'
+          path='/candidate-personalInfo'
           component={CandidatePersonalInfo}
         />
       </Grid>
