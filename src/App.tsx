@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Grid container>
         <Switch>
-          <Route exact path='/' component={Hr} />
+          <Route exact path='/hr' component={Hr} />
           <Route exact path='/about' component={About} />
           <Route exact path='/faq' component={Faq} />
           <Route exact path='/contact' component={Contact} />
