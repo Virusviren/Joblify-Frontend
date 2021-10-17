@@ -21,16 +21,11 @@ function App() {
         <Route exact path='/faq' component={Faq} />
         <Route exact path='/contact' component={Contact} />
         <Route exact path='/browse' component={Browse} />
-        <Route exact path='/hrApplications' component={Hr} />
-        <Route exact path='/hr-job-list' component={JobList} />
-        <Route exact path='/hr-personal-info' component={PersonalInfo} />
+        <Route path='/hr-applications' component={Hr} />
+        <Route path='/hr-job-list' component={JobList} />
+        <Route path='/hr-personal-info' component={PersonalInfo} />
+        <Route path='/candidate-applied-job' component={CandidateAppliedJobs} />
         <Route
-          exact
-          path='/candidate-applied-job'
-          component={CandidateAppliedJobs}
-        />
-        <Route
-          exact
           path='/candidate-personalInfo'
           component={CandidatePersonalInfo}
         />
