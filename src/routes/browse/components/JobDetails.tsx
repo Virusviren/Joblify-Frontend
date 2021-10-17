@@ -2,9 +2,14 @@ import { Button, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import CompanyBackground from '../../../static/icons/companyBackground.svg';
 import CompanyLogo from '../../../static/icons/companyLogo.svg';
+import { IJobs } from '../../../typings/jobs';
 import ApplicationForm from './ApplicationForm';
 
-const JobDetails = () => {
+interface IPROPS {
+  activeJobItem: IJobs;
+}
+
+const JobDetails = ({ activeJobItem }: IPROPS) => {
   const [open, setOpen] = useState(false);
   return (
     <Grid container className='job-details'>
@@ -49,7 +54,7 @@ const JobDetails = () => {
 
         <Grid container alignItems='center'>
           <Grid item xl={9} lg={8}>
-            <h3>SEnior frontend developer</h3>
+            <h3>{activeJobItem.jobId}</h3>
           </Grid>
           <Grid item xl={3} lg={4}>
             <p style={{ color: '#686868' }}>Posted 8 days ago</p>
@@ -57,10 +62,10 @@ const JobDetails = () => {
         </Grid>
         <Grid container alignItems='center' marginTop={2} marginBottom={6}>
           <Grid item xl={9} lg={8}>
-            <p>Berlin Germany</p>
+            <p>{activeJobItem.details.companyInfo.address}</p>
           </Grid>
           <Grid item xl={3} lg={4}>
-            <p>247 Applicants</p>
+            <p>{activeJobItem.applicationsReceived.length} Applicants</p>
           </Grid>
         </Grid>
         <Grid
@@ -71,43 +76,33 @@ const JobDetails = () => {
         >
           <Grid item xl={3} lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Experience</p>
-            <h4 style={{ padding: '0 1rem 1rem' }}>Minium 1 year</h4>
+            <h4 style={{ padding: '0 1rem 1rem' }}>
+              {activeJobItem.experience}
+            </h4>
           </Grid>
           <Grid item xl={3} lg={3} style={{ borderRight: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>
               Seniority Level
             </p>
-            <h4 style={{ padding: '0 1rem 1rem' }}>Senior</h4>
+            <h4 style={{ padding: '0 1rem 1rem' }}>
+              {activeJobItem.seniorityLevel}
+            </h4>
           </Grid>
           <Grid item xl={3} lg={3}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Job Type</p>
-            <h4 style={{ padding: '0 1rem 1rem' }}>Fulltime</h4>
+            <h4 style={{ padding: '0 1rem 1rem' }}>{activeJobItem.type}</h4>
           </Grid>
           <Grid item xl={3} lg={3} style={{ borderLeft: '2px solid #e1e1e1' }}>
             <p style={{ padding: '1rem ', color: '#686868' }}>Salary</p>
-            <h4 style={{ padding: '0 1rem 1rem' }}>$3000 / month</h4>
+            <h4 style={{ padding: '0 1rem 1rem' }}>
+              {activeJobItem.salary} / month
+            </h4>
           </Grid>
         </Grid>
         <h3>Overview</h3>
-        <p style={{ margin: '1.5rem 0' }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <p style={{ margin: '1.5rem 0' }}>{activeJobItem.overview}</p>
         <h3>Requirements</h3>
-        <p style={{ margin: '1.5rem 0' }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <p style={{ margin: '1.5rem 0' }}>{activeJobItem.requirements}</p>
       </Grid>
       <ApplicationForm open={open} setOpen={setOpen} />
     </Grid>
