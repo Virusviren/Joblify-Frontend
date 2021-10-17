@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import './App.css';
 import Home from './routes/home/Home';
@@ -21,6 +21,12 @@ function App() {
         <Route exact path='/faq' component={Faq} />
         <Route exact path='/contact' component={Contact} />
         <Route exact path='/browse' component={Browse} />
+        <Switch>
+          <Route path='/hr-applications'>
+            <Hr />
+          </Route>
+        </Switch>
+
         <Route path='/hr-applications'>
           <Hr />
         </Route>
