@@ -27,9 +27,6 @@ function App() {
           </Route>
         </Switch>
 
-        <Route path='/hr-applications'>
-          <Hr />
-        </Route>
         <Route path='/hr-job-list' component={JobList} />
         <Route path='/hr-personal-info' component={PersonalInfo} />
         <Route path='/candidate-applied-job' component={CandidateAppliedJobs} />
