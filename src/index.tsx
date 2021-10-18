@@ -8,16 +8,20 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme/theme';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </Provider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
