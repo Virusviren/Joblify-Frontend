@@ -106,10 +106,10 @@ const CandidateAppliedJobs = () => {
                 <h3>Filters</h3>
               </Grid>
             </Grid>
-            <Filter
+            {/* <Filter
               filterName='Type of Applications'
               filterOptions={hrFilter}
-            />
+            /> */}
           </Grid>
           <Grid
             item

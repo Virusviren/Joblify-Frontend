@@ -2,19 +2,35 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox, Grid } from '@mui/material';
 import './Filter.css';
 import { filterType } from '../../typings/filters';
+import { IJobs } from '../../typings/jobs';
+
 interface FilterComponentProps {
   filterName?: string;
   filterOptions?: filterType;
+  data?: [IJobs];
+  filters: string[];
+  setFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Filter = ({ filterName, filterOptions }: FilterComponentProps) => {
+const Filter = ({
+  filterName,
+  filterOptions,
+  data,
+  filters,
+  setFilters,
+}: FilterComponentProps) => {
+  const [items, setItems] = useState<IJobs[]>([]);
+  const [isChecked, setIsChecked] = useState(false);
   useEffect(() => {
-    console.log('Upadated');
-  }, []);
+    if (data) {
+      setItems(data);
+    }
+  }, [data]);
+
   return (
     <Accordion className='filter'>
       <AccordionSummary
@@ -28,7 +44,17 @@ const Filter = ({ filterName, filterOptions }: FilterComponentProps) => {
         {filterOptions?.map((option, index) => (
           <Grid container alignItems='center'>
             <Grid item lg={3}>
-              <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }} />
+              <Checkbox
+                sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  // setIsChecked(event.target.checked);
+                  event.target.checked
+                    ? setFilters([...filters, option.name])
+                    : setFilters([
+                        ...filters.filter((item) => item !== option.name),
+                      ]);
+                }}
+              />
             </Grid>
             <Grid item lg={7}>
               <p
@@ -43,7 +69,15 @@ const Filter = ({ filterName, filterOptions }: FilterComponentProps) => {
             </Grid>
             <Grid item lg={2} textAlign='center'>
               <p className='filter-item-count-unchecked'>
-                {option.numberOfOptions}
+                {filterName === 'Type of Job'
+                  ? items.filter((job: IJobs) => job.type === option.name)
+                      .length
+                  : filterName === 'Seniority Levels'
+                  ? items.filter(
+                      (job: IJobs) => job.seniorityLevel === option.name
+                    ).length
+                  : items.filter((job: IJobs) => job.salary === option.name)
+                      .length}
               </p>
             </Grid>
           </Grid>

@@ -4,16 +4,23 @@ import CompanyLogo from '../../../static/icons/companyLogo.svg';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { IJobs } from '../../../typings/jobs';
 interface JobCardProps {
-  isActive: boolean;
+  isActive?: boolean;
   jobItem: IJobs;
+  activeJobCardId?: any;
+  indexNumber: number;
+  setActiveJobCardId: React.Dispatch<React.SetStateAction<any>>;
+}
 
-  setActiveJobCardId: React.Dispatch<React.SetStateAction<string>>;
+interface Test {
+  activeJobCardId: string;
+  activeJobCardIndex: number;
 }
 
 const JobCard = ({
   isActive,
   jobItem,
-
+  activeJobCardId,
+  indexNumber,
   setActiveJobCardId,
 }: JobCardProps) => {
   const matches = useMediaQuery('(max-width:1535px)');
@@ -24,7 +31,15 @@ const JobCard = ({
       className={isActive ? 'job-card-active' : 'job-card'}
       marginBottom={5}
       onClick={() => {
-        setActiveJobCardId(jobItem._id.toString());
+        // setActiveJobCardId((activeJobCardId.activeJobcardIndex = indexNumber));
+
+        setActiveJobCardId((prevState: Test) => {
+          return {
+            ...prevState,
+            activeJobCardIndex: indexNumber,
+            activeJobCardId: jobItem._id.toString(),
+          };
+        });
       }}
     >
       <Grid
