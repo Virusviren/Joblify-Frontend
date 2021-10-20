@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import deleteIcon from '../../static/icons/delete.svg';
+import axios from 'axios';
 import {
   Button,
   Dialog,
@@ -8,13 +9,23 @@ import {
   DialogTitle,
   Grid,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
+
+import { useMutation, useQueryClient } from 'react-query';
+import { BASE_URL } from '../../utils/endpoints';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { loginUser } from '../../features/Authentication/authSlice';
 
 interface IPROPS {
   RegisterModalOpen: boolean;
   setRegisterModalOpen: Dispatch<SetStateAction<boolean>>;
   setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
   toggleLoginAndRegistrationModal: Dispatch<SetStateAction<string>>;
+}
+interface RegisterUser {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
 }
 
 const RegistrationModal = ({
@@ -23,6 +34,50 @@ const RegistrationModal = ({
   toggleLoginAndRegistrationModal,
   setLoginModalOpen,
 }: IPROPS) => {
+  //functions
+  const registerUser = async (formData: RegisterUser) => {
+    const response = await axios.post(`${BASE_URL}signup`, formData);
+    return response.data;
+  };
+
+  const dispatch = useAppDispatch();
+  const mutation = useMutation(registerUser, {
+    onSuccess: (data: any) => {
+      localStorage.setItem('token', data.token);
+      dispatch(loginUser(data));
+    },
+    onError: () => {
+      console.log('noe');
+    },
+  });
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    console.log(registerData);
+    setRegisterData({
+      name: '',
+      surname: '',
+      email: '',
+      password: '',
+    });
+    setPassword2('');
+    mutation.mutate(registerData);
+  };
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
+  };
+  //States
+  const [registerData, setRegisterData] = useState({
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+  });
+  const [password2, setPassword2] = useState('');
+
+  const { name, surname, email, password } = registerData;
+  // Component render
   return (
     <Dialog
       open={RegisterModalOpen}
@@ -64,125 +119,156 @@ const RegistrationModal = ({
         </Grid>
       </DialogTitle>
       <DialogContent>
-        <Grid container>
-          <Grid item xl={6} lg={6}>
-            <p
-              style={{
-                fontWeight: 'bold',
-                paddingTop: '1rem',
-                marginBottom: '10px',
-              }}
-            >
-              First Name
-            </p>
-            <input className='login-input' type='text' />
-          </Grid>
-          <Grid item xl={6} lg={6}>
-            {' '}
-            <p
-              style={{
-                fontWeight: 'bold',
-                paddingTop: '1rem',
-                marginBottom: '10px',
-              }}
-            >
-              Last Name
-            </p>
-            <input className='login-input' type='text' />
-          </Grid>
-          <Grid item lg={12} xl={12}>
-            <p
-              style={{
-                fontWeight: 'bold',
-                paddingTop: '1rem',
-                marginBottom: '10px',
-              }}
-            >
-              Email
-            </p>
-            <input
-              className='login-input'
-              style={{ width: '98%' }}
-              type='text'
-            />
-          </Grid>
-          <Grid item xl={6} lg={6}>
-            <p
-              style={{
-                fontWeight: 'bold',
-                paddingTop: '1rem',
-                marginBottom: '10px',
-              }}
-            >
-              Password
-            </p>
-            <input className='login-input' type='password' />
-          </Grid>
-          <Grid item xl={6} lg={6}>
-            {' '}
-            <p
-              style={{
-                fontWeight: 'bold',
-                paddingTop: '1rem',
-                marginBottom: '10px',
-              }}
-            >
-              Confirm password
-            </p>
-            <input className='login-input' type='password' />
-          </Grid>
-          <Grid item marginTop={3}>
-            <p>
-              Already have an account?{' '}
-              <span
+        <form onSubmit={handleSubmit}>
+          <Grid container>
+            <Grid item xl={6} lg={6}>
+              <p
                 style={{
                   fontWeight: 'bold',
-                  cursor: 'pointer',
-                  color: '#4640de',
-                }}
-                onClick={() => {
-                  setLoginModalOpen(true);
-                  toggleLoginAndRegistrationModal('Login');
-                  setRegisterModalOpen(false);
+                  paddingTop: '1rem',
+                  marginBottom: '10px',
                 }}
               >
-                Login
-              </span>
-            </p>
+                First Name
+              </p>
+              <input
+                className='login-input'
+                type='text'
+                required
+                value={name}
+                onChange={onChange}
+                name='name'
+              />
+            </Grid>
+            <Grid item xl={6} lg={6}>
+              {' '}
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  paddingTop: '1rem',
+                  marginBottom: '10px',
+                }}
+              >
+                Last Name
+              </p>
+              <input
+                className='login-input'
+                type='text'
+                value={surname}
+                onChange={onChange}
+                name='surname'
+              />
+            </Grid>
+            <Grid item lg={12} xl={12}>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  paddingTop: '1rem',
+                  marginBottom: '10px',
+                }}
+              >
+                Email
+              </p>
+              <input
+                className='login-input'
+                style={{ width: '98%' }}
+                type='text'
+                required
+                value={email}
+                onChange={onChange}
+                name='email'
+              />
+            </Grid>
+            <Grid item xl={6} lg={6}>
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  paddingTop: '1rem',
+                  marginBottom: '10px',
+                }}
+              >
+                Password
+              </p>
+              <input
+                className='login-input'
+                type='password'
+                required
+                value={password}
+                onChange={onChange}
+                name='password'
+              />
+            </Grid>
+            <Grid item xl={6} lg={6}>
+              {' '}
+              <p
+                style={{
+                  fontWeight: 'bold',
+                  paddingTop: '1rem',
+                  marginBottom: '10px',
+                }}
+              >
+                Confirm password
+              </p>
+              <input
+                className='login-input'
+                type='password'
+                required
+                value={password2}
+                onChange={(event) => setPassword2(event.target.value)}
+                name='password2'
+              />
+            </Grid>
+            <Grid item marginTop={3}>
+              <p>
+                Already have an account?{' '}
+                <span
+                  style={{
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    color: '#4640de',
+                  }}
+                  onClick={() => {
+                    setLoginModalOpen(true);
+                    toggleLoginAndRegistrationModal('Login');
+                    setRegisterModalOpen(false);
+                  }}
+                >
+                  Login
+                </span>
+              </p>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid
+            container
+            xl={12}
+            lg={12}
+            justifyContent='center'
+            marginBottom={4}
+          >
+            <Grid item xl={12} lg={12} textAlign='center'>
+              <Button
+                variant='contained'
+                color='primary'
+                style={{
+                  borderRadius: '10px',
+                  padding: '0.5rem 3rem',
+                  textTransform: 'capitalize',
+                  marginBottom: '1rem',
+                }}
+                type='submit'
+              >
+                SignUp
+              </Button>
+            </Grid>
+            <Grid item xl={12} lg={12} textAlign='center'>
+              <p>
+                By signing up you agree to the Terms & Conditions and the
+                Privacy Policy requirments.
+              </p>
+            </Grid>
+          </Grid>
+        </form>
       </DialogContent>
-      <DialogActions>
-        <Grid
-          container
-          xl={12}
-          lg={12}
-          justifyContent='center'
-          marginBottom={4}
-        >
-          <Grid item xl={12} lg={12} textAlign='center'>
-            <Button
-              variant='contained'
-              color='primary'
-              style={{
-                borderRadius: '10px',
-                padding: '0.5rem 3rem',
-                textTransform: 'capitalize',
-                marginBottom: '1rem',
-              }}
-              onClick={() => setRegisterModalOpen(false)}
-            >
-              SignUp
-            </Button>
-          </Grid>
-          <Grid item xl={12} lg={12} textAlign='center'>
-            <p>
-              By signing up you agree to the Terms & Conditions and the Privacy
-              Policy requirments.
-            </p>
-          </Grid>
-        </Grid>
-      </DialogActions>
     </Dialog>
   );
 };

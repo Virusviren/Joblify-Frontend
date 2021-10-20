@@ -11,19 +11,27 @@ import JobDetails from './JobDetails';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { BASE_URL } from '../../../utils/endpoints';
 import { IJobs } from '../../../typings/jobs';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import CustomPagination from '../../../shared-components/pagination/CustomPagination';
+import { useQuery } from 'react-query';
+
+import { useAppSelector, useAppDispatch } from '../../../app/hooks';
+import { loginUser } from '../../../features/Authentication/authSlice';
+// Interfaces
 
 interface Test {
   activeJobCardId: string;
   activeJobCardIndex: number;
 }
+
 const MainSection = () => {
   const matches = useMediaQuery('(max-width:1535px)');
+  const dispatch = useAppDispatch();
 
+  // Fetching Jobs
   const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
     fetch(`${BASE_URL}all-jobs`).then((res) => res.json())
   );
+
+  // States
 
   const [activeJobCardId, setActiveJobCardId] = useState({
     activeJobCardId: '',
@@ -31,8 +39,24 @@ const MainSection = () => {
   });
   const [filters, setFilters] = useState(['']);
 
+  const [activeJobDetails, setActiveJobDetails] = useState('');
+
+  // UseEffects
   useEffect(() => {
     if (!isFetching) {
+      setActiveJobCardId((prevState: Test) => {
+        return {
+          ...prevState,
+          activeJobCardIndex: 0,
+          activeJobCardId: data[0]._id.toString(),
+        };
+      });
+      console.log(activeJobDetails);
+    }
+  }, [filters]);
+  useEffect(() => {
+    if (!isFetching) {
+      // dispatch(allJobs(data));
       setActiveJobCardId((prevState: Test) => {
         return {
           ...prevState,
@@ -44,9 +68,10 @@ const MainSection = () => {
   }, [data]);
 
   useEffect(() => {
-    console.log(filters);
+    // console.log(filters);
 
     if (!isFetching) {
+      console.log(activeJobCardId.activeJobCardId);
       console.log(filters);
 
       const resultsType = filters?.map((item) => {
@@ -92,7 +117,15 @@ const MainSection = () => {
             filters={filters}
           />
         </Grid>
-        <Grid item xl={4} lg={4}>
+        <Grid
+          item
+          xl={4}
+          lg={4}
+          style={{
+            overflow: 'auto',
+            height: '100vh',
+          }}
+        >
           {/* <JobCard isActive={false} />
         <JobCard isActive={true} />
         <JobCard isActive={false} />
@@ -113,6 +146,8 @@ const MainSection = () => {
                       indexNumber={index}
                       activeJobCardId={activeJobCardId}
                       setActiveJobCardId={setActiveJobCardId}
+                      filters={filters}
+                      setActiveJobDetails={setActiveJobDetails}
                     />
                   );
                 })
@@ -130,6 +165,7 @@ const MainSection = () => {
                     indexNumber={index}
                     activeJobCardId={activeJobCardId}
                     setActiveJobCardId={setActiveJobCardId}
+                    setActiveJobDetails={setActiveJobDetails}
                   />
                 );
               })}
@@ -137,16 +173,13 @@ const MainSection = () => {
         <Grid item xl={5} lg={5}>
           {data
             .filter(
-              (job: IJobs) =>
-                job._id.toString() === activeJobCardId.activeJobCardId
+              (job: IJobs) => job._id.toString() === activeJobDetails.toString()
             )
             .map((job: IJobs) => {
-              console.log(job);
-
-              return <JobDetails activeJobItem={job} />;
+              return <JobDetails activeJobItem={job} filters={filters} />;
             })}
 
-          <CustomPagination />
+          {/* <CustomPagination /> */}
         </Grid>
       </Grid>
     );

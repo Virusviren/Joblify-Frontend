@@ -10,3 +10,17 @@
     font-size: large;
   }
 }
+
+::-webkit-scrollbar-track {
+  background: #4640de !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4640de !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4640de !important;
+}

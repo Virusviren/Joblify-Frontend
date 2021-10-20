@@ -17,7 +17,7 @@ const SearchJobs = () => {
       }}
       alignItems='center'
     >
-      <Grid item xl={3} lg={3}>
+      <Grid item xl={12} lg={12}>
         <Grid
           container
           alignItems='center'
@@ -41,60 +41,6 @@ const SearchJobs = () => {
             />
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xl={3} lg={3}>
-        <Grid container alignItems='center' gap={matches ? 0 : 2}>
-          <Grid item>
-            <img
-              className='searchbar-icons'
-              src={JobIcon}
-              alt='SearchIcon'
-              style={{ marginRight: matches ? '1rem' : '0' }}
-            />
-          </Grid>
-          <Grid item style={{ width: matches ? '75%' : '85%' }}>
-            <input
-              className='searchbar-input'
-              placeholder='Job Type'
-              type='text'
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xl={3} lg={3}>
-        <Grid container alignItems='center' gap={matches ? 0 : 2}>
-          <Grid item>
-            <img
-              className='searchbar-icons'
-              src={SalaryIcon}
-              alt='SearchIcon'
-              style={{ marginRight: matches ? '1rem' : '0' }}
-            />
-          </Grid>
-          <Grid item style={{ width: matches ? '75%' : '85%' }}>
-            <input
-              className='searchbar-input'
-              placeholder='Salary Range'
-              type='text'
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xl={3} lg={3} style={{ height: '100%' }}>
-        <Button
-          variant='contained'
-          fullWidth
-          color='primary'
-          style={{
-            height: '100%',
-            borderRadius: '0 10px 10px 0',
-            padding: '0.5rem 3rem',
-            textTransform: 'capitalize',
-            fontSize: 'large',
-          }}
-        >
-          Find Jobs
-        </Button>
       </Grid>
     </Grid>
   );

@@ -28,7 +28,12 @@ function App() {
         path='/candidate-applied-job'
         component={CandidateAppliedJobs}
       />
-      <Route path='/candidate-personalInfo' component={CandidatePersonalInfo} />
+
+      <Route
+        exact
+        path='/candidate-personalInfo'
+        component={CandidatePersonalInfo}
+      />
     </Grid>
   );
 }

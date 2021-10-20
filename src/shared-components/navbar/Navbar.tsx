@@ -9,11 +9,12 @@ import RegistrationModal from './RegistrationModal';
 
 const Navbar = () => {
   let location = useLocation();
-  console.log(location.pathname);
+
   const [LoginModalOpen, setLoginModalOpen] = useState(false);
   const [RegisterModalOpen, setRegisterModalOpen] = useState(false);
   const [toggleModal, setToggleModal] = useState('Login');
-  console.log(toggleModal);
+
+  const token = localStorage.getItem('token');
 
   return (
     <>
@@ -95,9 +96,18 @@ const Navbar = () => {
                   padding: '0.5rem 3rem',
                   textTransform: 'capitalize',
                 }}
-                onClick={() => setLoginModalOpen(true)}
+                onClick={
+                  token
+                    ? () => {
+                        localStorage.removeItem('token');
+                        window.location.reload();
+                      }
+                    : () => {
+                        setLoginModalOpen(true);
+                      }
+                }
               >
-                Login
+                {token ? 'Logout' : 'Login'}
               </Button>
             </Grid>
           </Grid>

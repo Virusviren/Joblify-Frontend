@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CompanyBackground from '../../../static/icons/companyBackground.svg';
 import CompanyLogo from '../../../static/icons/companyLogo.svg';
 import { IJobs } from '../../../typings/jobs';
@@ -7,10 +7,12 @@ import ApplicationForm from './ApplicationForm';
 
 interface IPROPS {
   activeJobItem: IJobs;
+  filters: string[];
 }
 
-const JobDetails = ({ activeJobItem }: IPROPS) => {
+const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
   const [open, setOpen] = useState(false);
+
   return (
     <Grid container className='job-details'>
       <Grid container className='job-details-background'>
