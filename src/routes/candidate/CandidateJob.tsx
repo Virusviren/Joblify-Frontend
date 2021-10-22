@@ -2,11 +2,34 @@ import React, { useState } from 'react';
 import { Grid, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import CompanyLogo from '../../static/icons/companyLogo.svg';
+import CompanyLogo from '../../static/icons/companyLogo.jpeg';
 import RoundInfo from '../../shared-components/roundInfo/RoundInfo';
 import CandidateViewApplication from './CandidateViewApplication';
 import UserActionConfirmation from '../../shared-components/userAction/UserActionConfirmation';
-const CandidateJob = () => {
+
+import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
+import moment from 'moment';
+interface IPROPS {
+  Application: IappliedJobsApplications;
+}
+
+const CandidateJob = ({ Application }: IPROPS) => {
+  console.log(Application);
+  const {
+    _id,
+    jobId,
+    jobTitle,
+    personalInfo,
+    skills,
+    status,
+    candidateId,
+    cv,
+    coverLetter,
+    education,
+    workExperience,
+    createdAt,
+  } = Application;
+
   const [open, setOpen] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   return (
@@ -21,7 +44,7 @@ const CandidateJob = () => {
       </Grid>
       <Grid item xl={6} lg={5} marginLeft={2}>
         <p style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          Slack
+          Strive
           <span
             style={{
               color: '#707070',
@@ -29,14 +52,17 @@ const CandidateJob = () => {
               marginLeft: '1rem',
             }}
           >
-            04 February 2021
+            {createdAt && moment(createdAt).format('DD MMMM YYYY')}
+            {/* {format(createdAt, 'dd MMMM dd')} */}
           </span>
         </p>
-        <p style={{ color: '#707070' }}>Senior Software Engineer</p>
+        <p style={{ color: '#707070' }}>{jobTitle}</p>
       </Grid>
       <Grid item xl={3} lg={3} textAlign='center'>
-        <p style={{ fontWeight: 'bold', marginBottom: '1.3rem' }}>1st Round</p>
-        <RoundInfo />
+        <p style={{ fontWeight: 'bold', marginBottom: '1.3rem' }}>
+          Round {status}
+        </p>
+        <RoundInfo status={status} />
       </Grid>
       <Grid item xl={1} lg={1} textAlign='center'>
         <p
@@ -69,10 +95,14 @@ const CandidateJob = () => {
           onClick={() => setOpenConfirmation(true)}
         />
       </Grid>
-      <CandidateViewApplication open={open} setOpen={setOpen} />
+      <CandidateViewApplication
+        open={open}
+        setOpen={setOpen}
+        applicationDetails={Application}
+      />
       <UserActionConfirmation
         title={'Are You Sure ?'}
-        message={'Do you want to reject it'}
+        message={'Do you want to withdraw your application?'}
         open={openConfirmation}
         setOpen={setOpenConfirmation}
       />

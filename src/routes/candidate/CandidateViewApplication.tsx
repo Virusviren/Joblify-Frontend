@@ -4,22 +4,60 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Grid, Divider } from '@mui/material';
+import { Grid, Divider, Avatar } from '@mui/material';
 import deleteIcon from '../../static/icons/delete.svg';
 import addIcon from '../../static/icons/addIcon.svg';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import Me from '../../static/icons/viren.jpg';
 import CandidateSkills from './CandidateSkills';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
+import CandidateEducation from './CandidateEducation';
+import CandidateWorkExperience from './CandidateWorkExperience';
+
 interface IPROPS {
   open: boolean;
-  setOpen(open: boolean): any;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  applicationDetails: IappliedJobsApplications;
 }
 
 const Input = styled('input')({
   display: 'none',
 });
-const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
+
+// Main component
+const CandidateViewApplication = ({
+  open,
+  setOpen,
+  applicationDetails,
+}: IPROPS) => {
+  const candidateName = useAppSelector(
+    (state) => state.candidate.candidateInfo?.personalInfo?.name
+  );
+  console.log(candidateName);
+
+  const {
+    _id,
+    candidateId,
+    jobId,
+    candidateProfilePic,
+    jobTitle,
+    jobCompanyName,
+    status,
+    personalInfo,
+    education,
+    workExperience,
+    skills,
+    email,
+    cv,
+    coverLetter,
+    infoVideo,
+    createdAt,
+  } = applicationDetails;
+  console.log(applicationDetails);
+
+  // Render
   return (
     <Dialog
       open={open}
@@ -36,7 +74,7 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
         <Grid container justifyContent='space-between'>
           <Grid item>
             <h4>
-              Application for{' '}
+              Application for {jobTitle}
               <span style={{ color: '#686868' }}>
                 Senior Frontend Developer
               </span>
@@ -45,7 +83,7 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
           <Grid item style={{ marginLeft: '20rem' }}>
             <h4>
               Application No.
-              <span style={{ color: '#686868' }}> #12345678</span>
+              <span style={{ color: '#686868' }}> #{_id}</span>
             </h4>
           </Grid>
           <Grid item>
@@ -90,16 +128,28 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
           gap={5}
         >
           <Grid item textAlign='center' xl={'auto'} lg={'auto'}>
-            <img
-              src={Me}
-              alt='avatar'
-              style={{
-                width: '8rem',
-                height: '8rem',
-                borderRadius: '50%',
-                backgroundColor: '#c4c4c4',
-              }}
-            />
+            {candidateProfilePic ? (
+              <img
+                src={candidateProfilePic}
+                alt='Candidate_Image'
+                style={{
+                  width: '8rem',
+                  height: '8rem',
+                  borderRadius: '50%',
+                  backgroundColor: '#c4c4c4',
+                }}
+              />
+            ) : (
+              <Avatar color='primary'>
+                {/* {  if(candidatePersonalInfo)return  candidatePersonalInfo.name} */}
+
+                {/* {candidateProfilePic === ''
+                  ? candidateInfo && candidateInfo!.personalInfo!.name[0]
+                  : ''} */}
+
+                {candidateName !== undefined ? candidateName[0] : ''}
+              </Avatar>
+            )}
 
             <p className='input-title' style={{ padding: '1rem 0' }}>
               Photo
@@ -109,15 +159,15 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
             <Grid container>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>First name</p>
-                <h3 style={{ marginTop: '1rem' }}>Viren</h3>
+                <h3 style={{ marginTop: '1rem' }}>{personalInfo?.name}</h3>
               </Grid>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Last name</p>
-                <h3 style={{ marginTop: '1rem' }}>Patil</h3>
+                <h3 style={{ marginTop: '1rem' }}>{personalInfo?.surname}</h3>
               </Grid>
               <Grid item xl={12} lg={12} paddingTop={4}>
                 <p className='input-title'>Address</p>
-                <h3 style={{ marginTop: '1rem' }}>Lublin Poland</h3>
+                <h3 style={{ marginTop: '1rem' }}>{personalInfo?.address}</h3>
               </Grid>
             </Grid>
           </Grid>
@@ -125,19 +175,25 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
             <Grid container>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Date of Birth</p>
-                <h3 style={{ marginTop: '1rem' }}>19/10/1997</h3>
+                <h3 style={{ marginTop: '1rem' }}>
+                  {personalInfo?.dateOfBirth}
+                </h3>
               </Grid>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Citizenship</p>
-                <h3 style={{ marginTop: '1rem' }}>India</h3>
+                <h3 style={{ marginTop: '1rem' }}>
+                  {personalInfo?.citizenship}
+                </h3>
               </Grid>
               <Grid item xl={6} lg={6} paddingTop={4}>
                 <p className='input-title'>Mobile number</p>
-                <h3 style={{ marginTop: '1rem' }}>+48579209416</h3>
+                <h3 style={{ marginTop: '1rem' }}>
+                  {personalInfo?.citizenship}
+                </h3>
               </Grid>
               <Grid item xl={6} lg={6} paddingTop={4}>
                 <p className='input-title'>Email</p>
-                <h3 style={{ marginTop: '1rem' }}>virenpatil1@outlook.com</h3>
+                <h3 style={{ marginTop: '1rem' }}>{email}</h3>
               </Grid>
             </Grid>
           </Grid>
@@ -161,37 +217,10 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
             Education
           </span>
         </p>
-        <Grid
-          container
-          style={{
-            marginBottom: '3.5rem',
-            marginLeft: '3rem',
-            marginRight: '3rem',
-          }}
-          alignItems={'center'}
-          justifyContent='space-between'
-        >
-          <Grid item xl={10} lg={10}>
-            <Grid container>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>Level of education</p>
-                <h3 style={{ marginTop: '1rem' }}>Phd</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>School/University Name</p>
-                <h3 style={{ marginTop: '1rem' }}>Wsei</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>From</p>
-                <h3 style={{ marginTop: '1rem' }}>October 2018</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>To</p>
-                <h3 style={{ marginTop: '1rem' }}>October 2020</h3>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        {education?.map((educationItem) => (
+          <CandidateEducation educationDetails={educationItem} />
+        ))}
+
         <Divider style={{ marginBottom: '2rem' }} />
         <p
           style={{
@@ -211,48 +240,10 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
             Work Experience
           </span>
         </p>
-        <Grid
-          container
-          style={{
-            marginBottom: '3.5rem',
-            marginLeft: '3rem',
-            marginRight: '3rem',
-          }}
-          alignItems='center'
-          justifyContent='space-between'
-        >
-          <Grid item xl={10} lg={10}>
-            <Grid container>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>Company Name</p>
-                <h3 style={{ marginTop: '1rem' }}>Google</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>Position</p>
-                <h3 style={{ marginTop: '1rem' }}>Intern</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>From</p>
-                <h3 style={{ marginTop: '1rem' }}>October 2020</h3>
-              </Grid>
-              <Grid item xl={3} lg={3}>
-                <p className='input-title'>To</p>
-                <h3 style={{ marginTop: '1rem' }}>October 2021</h3>
-              </Grid>
-              <Grid item xl={12} lg={12} paddingTop={4}>
-                <p className='input-title'>Description</p>
-                <h3 style={{ marginTop: '1rem' }}>
-                  {' '}
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Labore perspiciatis rerum illo obcaecati impedit numquam
-                  ratione expedita! Explicabo aliquam, quos nihil quod dolorum
-                  unde. Porro recusandae provident veniam delectus
-                  necessitatibus.{' '}
-                </h3>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        {workExperience?.map((workExperienceItem) => (
+          <CandidateWorkExperience workExperience={workExperienceItem} />
+        ))}
+
         <Divider style={{ marginBottom: '2rem' }} />
         <p
           style={{
@@ -280,7 +271,7 @@ const CandidateViewApplication = ({ open, setOpen }: IPROPS) => {
             marginRight: '3rem',
           }}
         >
-          <CandidateSkills />
+          <CandidateSkills skills={skills} />
         </Grid>
 
         <Divider style={{ marginBottom: '2rem' }} />

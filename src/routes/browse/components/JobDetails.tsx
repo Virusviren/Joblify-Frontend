@@ -1,3 +1,4 @@
+import { FormatColorResetRounded } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CompanyBackground from '../../../static/icons/companyBackground.svg';
@@ -12,7 +13,7 @@ interface IPROPS {
 
 const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
   const [open, setOpen] = useState(false);
-
+  const token = localStorage.getItem('token');
   return (
     <Grid container className='job-details'>
       <Grid container className='job-details-background'>
@@ -41,7 +42,7 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
       >
         <Button
           variant='contained'
-          color='primary'
+          color={token ? 'primary' : 'error'}
           style={{
             borderRadius: '10px',
             padding: '0.5rem 3rem',
@@ -49,9 +50,17 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
 
             margin: '2rem 0 2rem auto',
           }}
-          onClick={() => setOpen(true)}
+          onClick={
+            token
+              ? () => {
+                  setOpen(true);
+                }
+              : () => {
+                  setOpen(false);
+                }
+          }
         >
-          Apply
+          {token ? 'Apply' : 'Please Login to Apply'}
         </Button>
 
         <Grid container alignItems='center'>

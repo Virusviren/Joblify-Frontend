@@ -15,7 +15,7 @@ const Navbar = () => {
   const [toggleModal, setToggleModal] = useState('Login');
 
   const token = localStorage.getItem('token');
-
+  const userType = localStorage.getItem('userType');
   return (
     <>
       <Grid
@@ -87,6 +87,30 @@ const Navbar = () => {
                 Browse Jobs
               </Link>
             </Grid>
+            {token && (
+              <Grid item>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  to={
+                    userType === 'Candidate'
+                      ? '/candidate-applied-job'
+                      : '/hr-applications'
+                  }
+                >
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    style={{
+                      borderRadius: '10px',
+                      padding: '0.5rem 3rem',
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    Profile
+                  </Button>
+                </Link>
+              </Grid>
+            )}
             <Grid item>
               <Button
                 variant='contained'
@@ -100,6 +124,7 @@ const Navbar = () => {
                   token
                     ? () => {
                         localStorage.removeItem('token');
+                        localStorage.removeItem('userType');
                         window.location.reload();
                       }
                     : () => {

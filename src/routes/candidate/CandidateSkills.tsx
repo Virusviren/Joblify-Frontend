@@ -6,23 +6,20 @@ interface ChipData {
   key: number;
   label: string;
 }
+interface IPROPS {
+  skills?: string[];
+}
+
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
-const CandidateSkills = () => {
-  const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
-  ]);
+const CandidateSkills = ({ skills }: IPROPS) => {
   return (
     <div>
-      {chipData.map((data) => {
+      {skills?.map((data) => {
         return (
           <Chip
-            label={data.label}
+            label={data}
             color='primary'
             style={{
               marginRight: '0.5rem ',

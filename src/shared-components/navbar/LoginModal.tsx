@@ -15,6 +15,8 @@ import { loginUser } from '../../features/Authentication/authSlice';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { useHistory } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+
 interface IPROPS {
   LoginModalOpen: boolean;
   setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -48,20 +50,19 @@ const LoginModal = ({
       dispatch(loginUser(data));
       setLoginModalOpen(false);
 
-      const decoded = jwt.verify(data.token, test);
-      console.log(decoded);
-      console.log(history);
+      const decoded = jwt_decode(data.token);
+      const strDecoded = JSON.stringify(decoded);
+
+      localStorage.setItem('userType', JSON.parse(strDecoded).userInfo.type);
 
       history.push(history.location.pathname);
     },
-    onError: () => {
-      console.log('noe');
-    },
+    onError: () => {},
   });
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(loginData);
+
     setLoginData({
       email: '',
       password: '',

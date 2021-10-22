@@ -34,6 +34,4 @@ export const authSlice = createSlice({
 
 export const { loginUser } = authSlice.actions;
 
-export const selectCount = (state: RootState) => state.auth;
-
 export default authSlice.reducer;
