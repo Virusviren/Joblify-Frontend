@@ -9,12 +9,13 @@ import RegistrationModal from './RegistrationModal';
 
 const Navbar = () => {
   let location = useLocation();
-  console.log(location.pathname);
+
   const [LoginModalOpen, setLoginModalOpen] = useState(false);
   const [RegisterModalOpen, setRegisterModalOpen] = useState(false);
   const [toggleModal, setToggleModal] = useState('Login');
-  console.log(toggleModal);
 
+  const token = localStorage.getItem('token');
+  const userType = localStorage.getItem('userType');
   return (
     <>
       <Grid
@@ -86,6 +87,30 @@ const Navbar = () => {
                 Browse Jobs
               </Link>
             </Grid>
+            {token && (
+              <Grid item>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  to={
+                    userType === 'Candidate'
+                      ? '/candidate-applied-job'
+                      : '/hr-applications'
+                  }
+                >
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    style={{
+                      borderRadius: '10px',
+                      padding: '0.5rem 3rem',
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    Profile
+                  </Button>
+                </Link>
+              </Grid>
+            )}
             <Grid item>
               <Button
                 variant='contained'
@@ -95,9 +120,19 @@ const Navbar = () => {
                   padding: '0.5rem 3rem',
                   textTransform: 'capitalize',
                 }}
-                onClick={() => setLoginModalOpen(true)}
+                onClick={
+                  token
+                    ? () => {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('userType');
+                        window.location.reload();
+                      }
+                    : () => {
+                        setLoginModalOpen(true);
+                      }
+                }
               >
-                Login
+                {token ? 'Logout' : 'Login'}
               </Button>
             </Grid>
           </Grid>

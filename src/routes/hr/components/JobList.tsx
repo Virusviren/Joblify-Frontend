@@ -120,7 +120,7 @@ const JobList = () => {
                 <h3>Filters</h3>
               </Grid>
             </Grid>
-            <Filter filterName='Type of Jobs' filterOptions={jobFilter} />
+            {/* <Filter filterName='Type of Jobs' filterOptions={jobFilter} /> */}
           </Grid>
           <Grid
             item

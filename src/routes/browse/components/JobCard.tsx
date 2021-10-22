@@ -1,21 +1,43 @@
 import { Grid } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import CompanyLogo from '../../../static/icons/companyLogo.svg';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { IJobs } from '../../../typings/jobs';
 interface JobCardProps {
-  isActive: boolean;
+  isActive?: boolean;
   jobItem: IJobs;
+  activeJobCardId?: any;
+  indexNumber: number;
+  setActiveJobCardId: React.Dispatch<React.SetStateAction<any>>;
+  setActiveJobDetails: React.Dispatch<React.SetStateAction<any>>;
+  filters?: string[];
+}
 
-  setActiveJobCardId: React.Dispatch<React.SetStateAction<string>>;
+interface Test {
+  activeJobCardId: string;
+  activeJobCardIndex: number;
 }
 
 const JobCard = ({
   isActive,
   jobItem,
-
+  activeJobCardId,
+  indexNumber,
+  filters,
+  setActiveJobDetails,
   setActiveJobCardId,
 }: JobCardProps) => {
+  useEffect(() => {
+    // setActiveJobCardId((prevState: Test) => {
+    //   return {
+    //     ...prevState,
+    //     activeJobCardIndex: indexNumber,
+    //     activeJobCardId: jobItem._id.toString(),
+    //   };
+    // });
+    setActiveJobDetails(jobItem._id);
+  }, [filters]);
+
   const matches = useMediaQuery('(max-width:1535px)');
   return (
     <Grid
@@ -24,7 +46,15 @@ const JobCard = ({
       className={isActive ? 'job-card-active' : 'job-card'}
       marginBottom={5}
       onClick={() => {
-        setActiveJobCardId(jobItem._id.toString());
+        // setActiveJobCardId((activeJobCardId.activeJobcardIndex = indexNumber));
+        setActiveJobDetails(jobItem._id);
+        setActiveJobCardId((prevState: Test) => {
+          return {
+            ...prevState,
+            activeJobCardIndex: indexNumber,
+            activeJobCardId: jobItem._id.toString(),
+          };
+        });
       }}
     >
       <Grid
