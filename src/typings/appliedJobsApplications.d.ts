@@ -33,7 +33,7 @@ export interface Education {
 export interface PersonalInfo {
   name?: string;
   surname?: string;
-  dateOfBirth?: string;
+  dateOfBirth?: any;
   citizenship?: string;
   address?: string;
   mobileNumber?: string;

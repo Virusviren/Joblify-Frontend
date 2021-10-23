@@ -74,25 +74,21 @@ const CandidateAppliedJobs = () => {
   // Test
 
   const withDrawApplication = async (id: string) => {
-    const newListOfApplication = appliedJobsApplications.filter(
-      (job) => job._id !== id
-    );
+    // const newListOfApplication = appliedJobsApplications.filter(
+    //   (job) => job._id !== id
+    // );
 
-    dispatch(deleteApplication(newListOfApplication));
+    // dispatch(deleteApplication(newListOfApplication));
 
-    const response = await axios.patch(
-      `${BASE_URL}candidate/withdraw/${id}`,
-      null,
-      {
-        headers: { 'x-auth-token': token },
-      }
-    );
-
-    return response.data;
+    await axios.patch(`${BASE_URL}candidate/withdraw/${id}`, null, {
+      headers: { 'x-auth-token': token },
+    });
+    getAllApplicationsMutation.mutate(token);
   };
   const withDrawApplicationMutation = useMutation(withDrawApplication, {
     onSuccess: (data: any) => {
-      dispatch(getAllApplications(data));
+      // console.log(data.data);
+      // dispatch(getAllApplications(data));
     },
     onError: () => {},
   });
@@ -110,7 +106,7 @@ const CandidateAppliedJobs = () => {
   //   };
   // }, []);
 
-  if (token) {
+  if (token !== '' && localStorage.getItem('userType') === 'Candidate') {
     return (
       <Grid container>
         {getUserMutation.isLoading ? (
@@ -180,7 +176,8 @@ const CandidateAppliedJobs = () => {
                 <Grid item>
                   {/* name and id */}
                   <p style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
-                    {candidatePersonalInfo?.name}
+                    {candidatePersonalInfo?.name}{' '}
+                    {candidatePersonalInfo?.surname}
                   </p>
                   <p style={{ color: '#686868', fontWeight: 'bold' }}>
                     #{candidateInfo?._id?.substring(0, 10)}
@@ -286,7 +283,7 @@ const CandidateAppliedJobs = () => {
                       return (
                         <CandidateJob
                           Application={application}
-                          withDrawApplication={withDrawApplication}
+                          withDrawApplication={withDrawApplicationMutation}
                         />
                       );
                     })}

@@ -45,7 +45,7 @@ const UserActionConfirmation = ({
         <Button
           onClick={() => {
             setOpen(false);
-            withDrawApplication(idOfApplication);
+            withDrawApplication.mutate(idOfApplication);
           }}
         >
           Yes
