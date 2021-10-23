@@ -18,4 +18,8 @@ export interface Icandidateinfo {
 export interface PersonalInfo {
   name?: string;
   surname?: string;
+  dateOfBirth?: any;
+  citizenship?: string;
+  address?: string;
+  mobileNumber?: string;
 }

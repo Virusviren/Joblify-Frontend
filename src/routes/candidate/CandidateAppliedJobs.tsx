@@ -176,7 +176,8 @@ const CandidateAppliedJobs = () => {
                 <Grid item>
                   {/* name and id */}
                   <p style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>
-                    {candidatePersonalInfo?.name}
+                    {candidatePersonalInfo?.name}{' '}
+                    {candidatePersonalInfo?.surname}
                   </p>
                   <p style={{ color: '#686868', fontWeight: 'bold' }}>
                     #{candidateInfo?._id?.substring(0, 10)}
