@@ -78,10 +78,10 @@ const CandidateAppliedJobs = () => {
       (job) => job._id !== id
     );
 
-    // dispatch(deleteApplication(newListOfApplication));
+    dispatch(deleteApplication(newListOfApplication));
 
     const response = await axios.patch(
-      `http://localhost:5000/api/v1/candidate/withdraw/${id}`,
+      `${BASE_URL}candidate/withdraw/${id}`,
       null,
       {
         headers: { 'x-auth-token': token },
