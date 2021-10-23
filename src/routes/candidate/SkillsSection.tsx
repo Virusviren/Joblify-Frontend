@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Select,
@@ -12,22 +12,49 @@ import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import axios from 'axios';
+import { BASE_URL } from '../../utils/endpoints';
+import { Icandidateinfo } from '../../typings/candidate';
 interface ChipData {
-  key: number;
   label: string;
 }
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-const SkillsSection = () => {
-  const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
-  ]);
+interface IPROPS {
+  getUserMutation: any;
+  candidateInfo: Icandidateinfo;
+}
+
+const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
+  const [edit, setEdit] = useState(false);
+  const [skills, setSkills] = useState(candidateInfo.skills);
+
+  const token = localStorage.getItem('token')!;
+  const editSkills = async () => {
+    try {
+      await axios.patch(
+        `${BASE_URL}candidate/profile/edit-skills`,
+        {
+          skills: [],
+        },
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      );
+      await getUserMutation.mutate(token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [chipData, setChipData] = useState(skills);
+  const handleDelete = (chipToDelete: ChipData) => () => {
+    setChipData((chips) => chips?.filter((chip) => chip !== chipToDelete));
+  };
   return (
     <div
       style={{
@@ -38,22 +65,59 @@ const SkillsSection = () => {
       }}
     >
       <Grid container alignItems='center' padding={3}>
-        <Grid item xl={11} lg={10}>
+        <Grid item xl={edit ? 9 : 11} lg={edit ? 8 : 10}>
           <h3>Skills</h3>
         </Grid>
-        <Grid item xl={1} lg={2}>
-          {' '}
-          <Button
-            variant='contained'
-            color='primary'
-            style={{
-              borderRadius: '10px',
-              padding: '0.5rem 3rem',
-              textTransform: 'capitalize',
-            }}
-          >
-            Edit
-          </Button>{' '}
+        <Grid item xl={edit ? 3 : 1} lg={edit ? 4 : 2} textAlign='end'>
+          {!edit && (
+            <Button
+              variant='contained'
+              color='primary'
+              style={{
+                borderRadius: '10px',
+                padding: '0.5rem 3rem',
+                textTransform: 'capitalize',
+              }}
+              onClick={() => {
+                setEdit(true);
+              }}
+            >
+              Edit
+            </Button>
+          )}
+          {edit && (
+            <Button
+              variant='contained'
+              color='success'
+              style={{
+                borderRadius: '10px',
+                padding: '0.5rem 2.5rem',
+                textTransform: 'capitalize',
+                marginRight: '1rem',
+              }}
+              onClick={() => {
+                setEdit(false);
+              }}
+            >
+              Save
+            </Button>
+          )}
+          {edit && (
+            <Button
+              variant='contained'
+              color='error'
+              style={{
+                borderRadius: '10px',
+                padding: '0.5rem 2.5rem',
+                textTransform: 'capitalize',
+              }}
+              onClick={() => {
+                setEdit(false);
+              }}
+            >
+              Cancel
+            </Button>
+          )}
         </Grid>
       </Grid>
       <div
@@ -61,22 +125,42 @@ const SkillsSection = () => {
       ></div>
       <Grid container padding={3} gap={8}>
         <Grid container alignItems='center'>
-          <div>
-            {chipData.map((data) => {
-              return (
-                <Chip
-                  label={data.label}
-                  color='primary'
-                  style={{
-                    marginRight: '0.5rem ',
-                    fontSize: '1.1rem',
-                    fontWeight: 'bold',
-                    padding: '0.5rem 0.25rem',
-                  }}
-                />
-              );
-            })}
-          </div>
+          {edit ? (
+            <div>
+              {chipData?.map((data) => {
+                return (
+                  <Chip
+                    onDelete={handleDelete(data)}
+                    label={data}
+                    color='primary'
+                    style={{
+                      marginRight: '0.5rem ',
+                      fontSize: '1.1rem',
+                      fontWeight: 'bold',
+                      padding: '0.5rem 0.25rem',
+                    }}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div>
+              {chipData?.map((data) => {
+                return (
+                  <Chip
+                    label={data}
+                    color='primary'
+                    style={{
+                      marginRight: '0.5rem ',
+                      fontSize: '1.1rem',
+                      fontWeight: 'bold',
+                      padding: '0.5rem 0.25rem',
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>

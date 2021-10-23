@@ -52,13 +52,13 @@ const PersonalInfo = ({ getUserMutation }: IPORPS) => {
     console.log(imageToUpload.get('image'));
 
     await axios.patch(
-      `${BASE_URL}candidate/profile/edit/profile-photo`,
+      `http://localhost:5000/api/v1/candidate/profile/edit/profile-photo`,
       imageToUpload,
       {
         headers: { 'x-auth-token': token },
       }
     );
-    getUserMutation.mutate(token);
+    await window.location.reload();
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -202,7 +202,12 @@ const PersonalInfo = ({ getUserMutation }: IPORPS) => {
               <img
                 src={candidateInfo?.profilePhoto}
                 alt='Candidate_Image'
-                style={{ width: '9rem', borderRadius: '50%' }}
+                style={{
+                  width: '9rem',
+                  height: '9rem',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                }}
               />
             ) : (
               <Avatar color='primary' style={{ width: '9rem' }}>

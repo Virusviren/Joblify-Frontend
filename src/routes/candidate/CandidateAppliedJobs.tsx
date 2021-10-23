@@ -162,7 +162,12 @@ const CandidateAppliedJobs = () => {
                     <img
                       src={candidateInfo?.profilePhoto}
                       alt='Candidate_Image'
-                      style={{ width: '3rem', borderRadius: '50%' }}
+                      style={{
+                        width: '3rem',
+                        height: '3rem',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                      }}
                     />
                   ) : (
                     <Avatar color='primary'>
