@@ -23,6 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   getCandidate,
   getAllApplications,
+  deleteApplication,
 } from '../../features/Candidate/candidateSlice';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/endpoints';
@@ -34,7 +35,7 @@ import { IappliedJobsApplications } from '../../typings/appliedJobsApplications'
 //
 
 const CandidateAppliedJobs = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')!;
   const candidateInfo = useAppSelector(
     (state) => state.candidate.candidateInfo
   );
@@ -66,8 +67,31 @@ const CandidateAppliedJobs = () => {
   };
   const getAllApplicationsMutation = useMutation(getAllAppliedJobsList, {
     onSuccess: (data: any) => {
-      console.log(data);
+      dispatch(getAllApplications(data));
+    },
+    onError: () => {},
+  });
+  // Test
 
+  const withDrawApplication = async (id: string) => {
+    const newListOfApplication = appliedJobsApplications.filter(
+      (job) => job._id !== id
+    );
+
+    dispatch(deleteApplication(newListOfApplication));
+
+    const response = await axios.patch(
+      `${BASE_URL}candidate/withdraw/${id}`,
+      null,
+      {
+        headers: { 'x-auth-token': token },
+      }
+    );
+
+    return response.data;
+  };
+  const withDrawApplicationMutation = useMutation(withDrawApplication, {
+    onSuccess: (data: any) => {
       dispatch(getAllApplications(data));
     },
     onError: () => {},
@@ -78,13 +102,20 @@ const CandidateAppliedJobs = () => {
   useEffect(() => {
     token && getUserMutation.mutate(token);
     token && getAllApplicationsMutation.mutate(token);
-    console.log(appliedJobsApplications);
   }, []);
+
+  // useEffect(() => {
+  //   return () => {
+  //     withDrawApplicationMutation.mutate(token);
+  //   };
+  // }, []);
 
   if (token) {
     return (
       <Grid container>
         {getUserMutation.isLoading ? (
+          // && withDrawApplicationMutation.isLoading
+
           <Grid container textAlign='center'>
             <CircularProgress size={60} sx={{ margin: '2rem auto' }} />
           </Grid>
@@ -245,20 +276,32 @@ const CandidateAppliedJobs = () => {
                       <MenuItem value={20}>Oldest</MenuItem>
                     </Select>
                   </FormControl>
-                  {appliedJobsApplications.map(
+                  {appliedJobsApplications
+                    .filter(
+                      (jobApplication: IappliedJobsApplications) =>
+                        jobApplication?.status < 5
+                    )
+                    .sort((a, b) => a?.status - b?.status)
+                    .map((application) => {
+                      return (
+                        <CandidateJob
+                          Application={application}
+                          withDrawApplication={withDrawApplication}
+                        />
+                      );
+                    })}
+
+                  {/* {appliedJobsApplications.map(
                     (application: IappliedJobsApplications) => {
-                      console.log(application);
-
-                      return <CandidateJob Application={application} />;
+                      return (
+                        <CandidateJob
+                          Application={application}
+                          withDrawApplication={withDrawApplication}
+                        />
+                      );
                     }
-                  )}
+                  )} */}
 
-                  {/* <CandidateJob />
-                  <CandidateJob />
-                  <CandidateJob />
-                  <CandidateJob />
-                  <CandidateJob />
-                  */}
                   <CustomPagination />
                 </Grid>
               </Grid>

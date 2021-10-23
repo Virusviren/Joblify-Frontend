@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import './RoundInfo.css';
 
 interface IPROPS {
-  status?: number;
+  status: number;
 }
 const RoundInfo = ({ status }: IPROPS) => {
   return (
@@ -11,37 +11,37 @@ const RoundInfo = ({ status }: IPROPS) => {
       <Grid
         item
         className={
-          status === 1 ? 'round-circle-active' : 'round-circle-inactive'
+          status >= 1 ? 'round-circle-active' : 'round-circle-inactive'
         }
       ></Grid>
       <Grid
         item
-        className={status === 1 ? 'round-line-active' : 'round-line-inactive'}
+        className={status >= 1 ? 'round-line-active' : 'round-line-inactive'}
       ></Grid>
       <Grid
         item
         className={
-          status === 2 ? 'round-circle-active' : 'round-circle-inactive'
+          status >= 2 ? 'round-circle-active' : 'round-circle-inactive'
         }
       ></Grid>
       <Grid
         item
-        className={status === 2 ? 'round-line-active' : 'round-line-inactive'}
+        className={status >= 2 ? 'round-line-active' : 'round-line-inactive'}
       ></Grid>
       <Grid
         item
         className={
-          status === 3 ? 'round-circle-active' : 'round-circle-inactive'
+          status >= 3 ? 'round-circle-active' : 'round-circle-inactive'
         }
       ></Grid>
       <Grid
         item
-        className={status === 3 ? 'round-line-active' : 'round-line-inactive'}
+        className={status >= 3 ? 'round-line-active' : 'round-line-inactive'}
       ></Grid>
       <Grid
         item
         className={
-          status === 4 ? 'round-circle-active' : 'round-circle-inactive'
+          status >= 4 ? 'round-circle-active' : 'round-circle-inactive'
         }
       ></Grid>
     </Grid>
