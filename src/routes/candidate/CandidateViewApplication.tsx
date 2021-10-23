@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,11 +15,17 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
 import CandidateEducation from './CandidateEducation';
 import CandidateWorkExperience from './CandidateWorkExperience';
+import InformationVideo from '../../shared-components/informationVideo/InformationVideo';
+import { AnyMap } from '@reduxjs/toolkit/node_modules/immer/dist/internal';
+import UserActionConfirmation from '../../shared-components/userAction/UserActionConfirmation';
 
 interface IPROPS {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   applicationDetails: IappliedJobsApplications;
+  withDrawApplication?: any;
+  openConfirmation: boolean;
+  setOpenConfirmation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Input = styled('input')({
@@ -31,11 +37,15 @@ const CandidateViewApplication = ({
   open,
   setOpen,
   applicationDetails,
+  withDrawApplication,
+  openConfirmation,
+  setOpenConfirmation,
 }: IPROPS) => {
   const candidateName = useAppSelector(
     (state) => state.candidate.candidateInfo?.personalInfo?.name
   );
-  console.log(candidateName);
+
+  const [openViewVideo, setOpenViewVideo] = useState(false);
 
   const {
     _id,
@@ -55,7 +65,6 @@ const CandidateViewApplication = ({
     infoVideo,
     createdAt,
   } = applicationDetails;
-  console.log(applicationDetails);
 
   // Render
   return (
@@ -74,16 +83,17 @@ const CandidateViewApplication = ({
         <Grid container justifyContent='space-between'>
           <Grid item>
             <h4>
-              Application for {jobTitle}
-              <span style={{ color: '#686868' }}>
-                Senior Frontend Developer
-              </span>
+              Application for{' '}
+              <span style={{ color: '#686868' }}>{jobTitle}</span>
             </h4>
           </Grid>
           <Grid item style={{ marginLeft: '20rem' }}>
             <h4>
               Application No.
-              <span style={{ color: '#686868' }}> #{_id}</span>
+              <span style={{ color: '#686868' }}>
+                {' '}
+                #{_id?.toString()?.substring(0, 10)}
+              </span>
             </h4>
           </Grid>
           <Grid item>
@@ -188,7 +198,7 @@ const CandidateViewApplication = ({
               <Grid item xl={6} lg={6} paddingTop={4}>
                 <p className='input-title'>Mobile number</p>
                 <h3 style={{ marginTop: '1rem' }}>
-                  {personalInfo?.citizenship}
+                  {personalInfo?.mobileNumber}
                 </h3>
               </Grid>
               <Grid item xl={6} lg={6} paddingTop={4}>
@@ -303,13 +313,10 @@ const CandidateViewApplication = ({
         >
           <Grid item>
             <label htmlFor='contained-button-file1'>
-              <Input
-                id='contained-button-file1'
-                multiple
-                type='file'
-                accept='application/pdf'
-              />
               <Button
+                onClick={() => {
+                  window.open(`${coverLetter}`, '_target');
+                }}
                 component='span'
                 variant='contained'
                 color='primary'
@@ -327,6 +334,9 @@ const CandidateViewApplication = ({
           </Grid>
           <Grid item>
             <Button
+              onClick={() => {
+                window.open(`${cv}`, '_target');
+              }}
               variant='contained'
               color='primary'
               style={{
@@ -342,6 +352,7 @@ const CandidateViewApplication = ({
           </Grid>
           <Grid item>
             <Button
+              onClick={() => setOpenViewVideo(true)}
               variant='contained'
               color='primary'
               style={{
@@ -356,6 +367,11 @@ const CandidateViewApplication = ({
             </Button>
           </Grid>
         </Grid>
+        <InformationVideo
+          openView={openViewVideo}
+          close={setOpenViewVideo}
+          videoSrc={infoVideo}
+        />
       </DialogContent>
 
       <DialogActions style={{ padding: '1.5rem 3rem' }}>
@@ -374,14 +390,17 @@ const CandidateViewApplication = ({
                 fontSize: '1.1rem',
               }}
             >
-              Current stage - 1st Round
+              Current stage - Round {status}
             </Button>
           </Grid>
 
           <Grid item>
             {' '}
             <Button
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpenConfirmation(true);
+                setOpen(false);
+              }}
               variant='contained'
               color='error'
               style={{
@@ -397,6 +416,14 @@ const CandidateViewApplication = ({
           </Grid>
         </Grid>
       </DialogActions>
+      <UserActionConfirmation
+        title={'Are You Sure ?'}
+        message={'Do you want to withdraw your application?'}
+        open={openConfirmation}
+        setOpen={setOpenConfirmation}
+        withDrawApplication={withDrawApplication}
+        idOfApplication={_id}
+      />
     </Dialog>
   );
 };

@@ -34,9 +34,16 @@ export const candidateSlice = createSlice({
         appliedJobsApplications: action.payload,
       };
     },
+    deleteApplication: (state, action) => {
+      return {
+        ...state,
+        appliedJobsApplications: action.payload,
+      };
+    },
   },
 });
 
-export const { getCandidate, getAllApplications } = candidateSlice.actions;
+export const { getCandidate, getAllApplications, deleteApplication } =
+  candidateSlice.actions;
 
 export default candidateSlice.reducer;

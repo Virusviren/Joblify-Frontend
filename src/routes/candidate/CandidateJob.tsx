@@ -11,10 +11,10 @@ import { IappliedJobsApplications } from '../../typings/appliedJobsApplications'
 import moment from 'moment';
 interface IPROPS {
   Application: IappliedJobsApplications;
+  withDrawApplication?: any;
 }
 
-const CandidateJob = ({ Application }: IPROPS) => {
-  console.log(Application);
+const CandidateJob = ({ Application, withDrawApplication }: IPROPS) => {
   const {
     _id,
     jobId,
@@ -32,6 +32,7 @@ const CandidateJob = ({ Application }: IPROPS) => {
 
   const [open, setOpen] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
+
   return (
     <Grid container padding={2} className='highlight-candidate'>
       <Grid item xl={'auto'} lg={'auto'}>
@@ -62,7 +63,7 @@ const CandidateJob = ({ Application }: IPROPS) => {
         <p style={{ fontWeight: 'bold', marginBottom: '1.3rem' }}>
           Round {status}
         </p>
-        <RoundInfo status={status} />
+        {status && <RoundInfo status={status} />}
       </Grid>
       <Grid item xl={1} lg={1} textAlign='center'>
         <p
@@ -99,12 +100,17 @@ const CandidateJob = ({ Application }: IPROPS) => {
         open={open}
         setOpen={setOpen}
         applicationDetails={Application}
+        withDrawApplication={withDrawApplication}
+        openConfirmation={openConfirmation}
+        setOpenConfirmation={setOpenConfirmation}
       />
       <UserActionConfirmation
         title={'Are You Sure ?'}
         message={'Do you want to withdraw your application?'}
         open={openConfirmation}
         setOpen={setOpenConfirmation}
+        withDrawApplication={withDrawApplication}
+        idOfApplication={_id}
       />
     </Grid>
   );

@@ -5,7 +5,7 @@ export interface IappliedJobsApplications {
   jobTitle?: string;
   jobCompanyName?: string;
   candidateProfilePic?: string;
-  status?: number;
+  status: number;
   personalInfo?: PersonalInfo;
   education?: Education[];
   workExperience?: WorkExperience[];

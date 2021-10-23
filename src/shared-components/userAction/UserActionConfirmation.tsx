@@ -13,8 +13,17 @@ interface IPROPS {
   title: String;
   message: String;
   handelSubmit?: void;
+  withDrawApplication?: any;
+  idOfApplication?: any;
 }
-const UserActionConfirmation = ({ open, setOpen, title, message }: IPROPS) => {
+const UserActionConfirmation = ({
+  open,
+  setOpen,
+  title,
+  message,
+  withDrawApplication,
+  idOfApplication,
+}: IPROPS) => {
   return (
     <Dialog
       open={open}
@@ -33,7 +42,14 @@ const UserActionConfirmation = ({ open, setOpen, title, message }: IPROPS) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setOpen(false)}>No</Button>
-        <Button onClick={() => setOpen(false)}>Yes</Button>
+        <Button
+          onClick={() => {
+            setOpen(false);
+            withDrawApplication(idOfApplication);
+          }}
+        >
+          Yes
+        </Button>
       </DialogActions>
     </Dialog>
   );

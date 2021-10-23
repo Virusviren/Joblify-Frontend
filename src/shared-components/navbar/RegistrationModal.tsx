@@ -53,7 +53,7 @@ const RegistrationModal = ({
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(registerData);
+
     setRegisterData({
       name: '',
       surname: '',

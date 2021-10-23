@@ -36,7 +36,7 @@ const Candidate = () => {
       </Grid>
       <Grid item xl={3} lg={3} textAlign='center'>
         <p style={{ fontWeight: 'bold', marginBottom: '1.3rem' }}>1st Round</p>
-        <RoundInfo />
+        {/* <RoundInfo /> */}
       </Grid>
       <Grid item xl={1} lg={1} textAlign='center'>
         <p
