@@ -89,7 +89,9 @@ const CandidatePersonalInfo = () => {
                   {/* Avatar img */}
                   {candidateInfo?.profilePhoto ? (
                     <img
-                      src={candidateInfo?.profilePhoto}
+                      src={`${
+                        candidateInfo?.profilePhoto
+                      }?random_number=${new Date().getTime()}`}
                       alt='Candidate_Image'
                       style={{
                         width: '3rem',
@@ -142,12 +144,16 @@ const CandidatePersonalInfo = () => {
               {/* For Personal Info Edit section */}
 
               {/* Personal information containers */}
+
               <PersonalInfo getUserMutation={getUserMutation} />
               <Education
                 getUserMutation={getUserMutation}
                 candidateInfo={candidateInfo}
               />
-              <WorkExperience />
+              <WorkExperience
+                getUserMutation={getUserMutation}
+                candidateInfo={candidateInfo}
+              />
               <SkillsSection
                 getUserMutation={getUserMutation}
                 candidateInfo={candidateInfo}

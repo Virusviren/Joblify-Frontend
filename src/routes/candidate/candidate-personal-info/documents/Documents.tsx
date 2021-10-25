@@ -23,7 +23,7 @@ const Documents = () => {
         <Grid item xl={11} lg={10}>
           <h3>Documents</h3>
         </Grid>
-        <Grid item xl={1} lg={2}>
+        <Grid item xl={1} lg={2} textAlign='end'>
           {' '}
           <Button
             variant='contained'

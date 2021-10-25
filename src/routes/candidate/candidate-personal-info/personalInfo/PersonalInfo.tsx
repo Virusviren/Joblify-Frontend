@@ -200,7 +200,10 @@ const PersonalInfo = ({ getUserMutation }: IPORPS) => {
             {/* Avatar img */}
             {candidateInfo.profilePhoto ? (
               <img
-                src={candidateInfo?.profilePhoto}
+                // src={candidateInfo?.profilePhoto}
+                src={`${
+                  candidateInfo?.profilePhoto
+                }?random_number=${new Date().getTime()}`}
                 alt='Candidate_Image'
                 style={{
                   width: '9rem',

@@ -58,7 +58,7 @@ const Education = ({ getUserMutation, candidateInfo }: IPROPS) => {
         <Grid item xl={11} lg={10}>
           <h3>Education</h3>
         </Grid>
-        <Grid item xl={1} lg={2}>
+        <Grid item xl={1} lg={2} paddingRight={0} textAlign='end'>
           {!addEducation && (
             <Button
               variant='contained'
