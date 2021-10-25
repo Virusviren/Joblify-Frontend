@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Logo from '../../static/icons/Logo.svg';
+import Logo from '../../../static/icons/Logo.svg';
 import {
   Grid,
   Select,
@@ -13,23 +13,23 @@ import SearchIcon from '@mui/icons-material/Search';
 import SettingsInputCompositeIcon from '@mui/icons-material/SettingsInputComposite';
 import candidatePic from '../../static/icons/viren.jpg';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CandidateSideMenu from './CandidateSideMenu';
-import { hrFilter } from '../../static/data/options';
+import CandidateSideMenu from '../CandidateSideMenu';
+import { hrFilter } from '../../../static/data/options';
 import CandidateJob from './CandidateJob';
-import CustomPagination from '../../shared-components/pagination/CustomPagination';
-import Filter from '../../shared-components/filter/Filter';
+import CustomPagination from '../../../shared-components/pagination/CustomPagination';
+import Filter from '../../../shared-components/filter/Filter';
 import { Redirect } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
   getCandidate,
   getAllApplications,
   deleteApplication,
-} from '../../features/Candidate/candidateSlice';
+} from '../../../features/Candidate/candidateSlice';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/endpoints';
+import { BASE_URL } from '../../../utils/endpoints';
 import { useMutation } from 'react-query';
 import CircularProgress from '@mui/material/CircularProgress';
-import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
+import { IappliedJobsApplications } from '../../../typings/appliedJobsApplications';
 //
 //
 //

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Grid, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import CompanyLogo from '../../static/icons/companyLogo.jpeg';
-import RoundInfo from '../../shared-components/roundInfo/RoundInfo';
+import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
+import RoundInfo from '../../../shared-components/roundInfo/RoundInfo';
 import CandidateViewApplication from './CandidateViewApplication';
-import UserActionConfirmation from '../../shared-components/userAction/UserActionConfirmation';
+import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
 
-import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
+import { IappliedJobsApplications } from '../../../typings/appliedJobsApplications';
 import moment from 'moment';
 interface IPROPS {
   Application: IappliedJobsApplications;

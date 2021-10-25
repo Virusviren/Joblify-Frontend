@@ -11,10 +11,10 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import AddEducation from './AddEducation';
-import { Icandidateinfo } from '../../typings/candidate';
+import { Icandidateinfo } from '../../../../typings/candidate';
 import moment from 'moment';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/endpoints';
+import { BASE_URL } from '../../../../utils/endpoints';
 import EditEducation from './EditEducation';
 interface IPROPS {
   getUserMutation: any;

@@ -10,20 +10,20 @@ import {
   Avatar,
   IconButton,
 } from '@mui/material';
-import { countries } from '../../static/data/countries';
+import { countries } from '../../../../static/data/countries';
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { BASE_URL } from '../../utils/endpoints';
+import { BASE_URL } from '../../../../utils/endpoints';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../../../../app/hooks';
 import EditIcon from '@mui/icons-material/Edit';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import { PersonalInfo as IPERSONALINFO } from '../../typings/appliedJobsApplications';
+import { PersonalInfo as IPERSONALINFO } from '../../../../typings/appliedJobsApplications';
 import moment from 'moment';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
