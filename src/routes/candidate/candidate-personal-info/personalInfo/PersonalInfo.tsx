@@ -52,7 +52,7 @@ const PersonalInfo = ({ getUserMutation }: IPORPS) => {
     console.log(imageToUpload.get('image'));
 
     await axios.patch(
-      `http://localhost:5000/api/v1/candidate/profile/edit/profile-photo`,
+      `${BASE_URL}candidate/profile/edit/profile-photo`,
       imageToUpload,
       {
         headers: { 'x-auth-token': token },

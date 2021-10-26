@@ -158,7 +158,10 @@ const CandidatePersonalInfo = () => {
                 getUserMutation={getUserMutation}
                 candidateInfo={candidateInfo}
               />
-              <Documents />
+              <Documents
+                getUserMutation={getUserMutation}
+                candidateInfo={candidateInfo}
+              />
             </Grid>
           </>
         )}
