@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,6 +20,7 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { countries } from '../../../static/data/countries';
 import moment from 'moment';
 import { ModeCommentOutlined } from '@mui/icons-material';
+import { Education as Ieducation } from '../../../typings/appliedJobsApplications';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -54,33 +55,26 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
     mobileNumber: '',
   });
   // State for education
-  const [educationDateFrom, setEducationDateFrom] = useState<
-    Date | null | string
-  >(null);
-  const [educationDateTo, setEducationDateTo] = useState<Date | null | string>(
-    null
-  );
+
   const [education, setEducation] = useState({
     level: '',
     universityName: '',
     startingDate: 'iv',
     endingDate: 'id',
   });
-  const [allEducation, setAllEducation] = useState([
-    { level: '', universityName: '', startingDate: '', endingDate: '' },
-  ]);
+  const [allEducation, setAllEducation] = useState<Ieducation[]>([]);
 
   // State for WorkExperience
 
-  const [workExperience, setWorkExperience] = useState([
-    {
-      companyName: '',
-      position: '',
-      startingDate: '',
-      endingDate: '',
-      description: '',
-    },
-  ]);
+  // const [workExperience, setWorkExperience] = useState([
+  //   {
+  //     companyName: '',
+  //     position: '',
+  //     startingDate: '',
+  //     endingDate: '',
+  //     description: '',
+  //   },
+  // ]);
   // Functions
   const handleChangePersonalInfo: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -95,7 +89,6 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   const addEducationItem = () => {
     setAllEducation([...allEducation, education]);
     console.log(allEducation);
-
     // setEducation({
     //   level: '',
     //   universityName: '',
@@ -115,7 +108,9 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
 
     console.log(personalDataToSubmit);
   };
-
+  // useEffect(() => {
+  //   console.log(allEducation);
+  // }, [allEducation]);
   return (
     <Dialog
       open={open}
@@ -340,7 +335,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
               </Grid>
               {/* Map of the educations */}
 
-              {allEducation.length > 1 &&
+              {/* {allEducation.length > 1 &&
                 allEducation.slice(2, allEducation.length - 1).map((item) => (
                   <Grid container>
                     <Grid item xl={3} lg={3}>
@@ -360,7 +355,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                       <p>{item.endingDate}</p>
                     </Grid>
                   </Grid>
-                ))}
+                ))} */}
 
               {/* Finsh here */}
             </Grid>
