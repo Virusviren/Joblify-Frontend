@@ -213,9 +213,13 @@ const PersonalInfo = ({ getUserMutation }: IPORPS) => {
                 }}
               />
             ) : (
-              <Avatar color='primary' style={{ width: '9rem' }}>
+              <Avatar color='primary' style={{ width: '9rem', height: '9rem' }}>
                 {/* {  if(candidatePersonalInfo)return  candidatePersonalInfo.name} */}
-                {candidateInfo ? candidateInfo?.personalInfo?.name![0] : ''}
+                {candidateInfo
+                  ? ` ${candidateInfo?.personalInfo?.name![0]}${
+                      candidateInfo?.personalInfo?.surname![0]
+                    }`
+                  : ''}
               </Avatar>
             )}
           </StyledBadge>

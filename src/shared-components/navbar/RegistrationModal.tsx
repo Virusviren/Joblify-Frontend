@@ -14,7 +14,8 @@ import { useMutation, useQueryClient } from 'react-query';
 import { BASE_URL } from '../../utils/endpoints';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { loginUser } from '../../features/Authentication/authSlice';
-
+import { useHistory } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 interface IPROPS {
   RegisterModalOpen: boolean;
   setRegisterModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -34,6 +35,7 @@ const RegistrationModal = ({
   toggleLoginAndRegistrationModal,
   setLoginModalOpen,
 }: IPROPS) => {
+  let history = useHistory();
   //functions
   const registerUser = async (formData: RegisterUser) => {
     const response = await axios.post(`${BASE_URL}signup`, formData);
@@ -45,6 +47,13 @@ const RegistrationModal = ({
     onSuccess: (data: any) => {
       localStorage.setItem('token', data.token);
       dispatch(loginUser(data));
+      setRegisterModalOpen(false);
+      const decoded = jwt_decode(data.token);
+      const strDecoded = JSON.stringify(decoded);
+
+      localStorage.setItem('userType', JSON.parse(strDecoded).userInfo.type);
+
+      history.push(history.location.pathname);
     },
     onError: () => {
       console.log('noe');

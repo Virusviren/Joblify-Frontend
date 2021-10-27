@@ -65,7 +65,7 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
 
         <Grid container alignItems='center'>
           <Grid item xl={9} lg={8}>
-            <h3>{activeJobItem.jobId}</h3>
+            <h3>{activeJobItem.jobTitle}</h3>
           </Grid>
           <Grid item xl={3} lg={4}>
             <p style={{ color: '#686868' }}>Posted 8 days ago</p>
@@ -115,7 +115,11 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
         <h3>Requirements</h3>
         <p style={{ margin: '1.5rem 0' }}>{activeJobItem.requirements}</p>
       </Grid>
-      <ApplicationForm open={open} setOpen={setOpen} />
+      <ApplicationForm
+        open={open}
+        setOpen={setOpen}
+        activeJobItem={activeJobItem}
+      />
     </Grid>
   );
 };

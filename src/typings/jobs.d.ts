@@ -1,6 +1,7 @@
 export interface IJobs {
   _id: ID;
   jobId: string;
+  jobTitle?: string;
   details: Details;
   overview: string;
   requirements: string;
