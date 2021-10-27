@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Divider, Avatar } from '@mui/material';
-import { WorkExperience } from '../../typings/appliedJobsApplications';
+import { WorkExperience } from '../../../../typings/appliedJobsApplications';
 import moment from 'moment';
 
 interface IPROPS {

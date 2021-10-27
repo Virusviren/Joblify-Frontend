@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Divider, Avatar } from '@mui/material';
-import { Education } from '../../typings/appliedJobsApplications';
+import { Education } from '../../../../typings/appliedJobsApplications';
 import moment from 'moment';
 interface IPROPS {
   educationDetails: Education;

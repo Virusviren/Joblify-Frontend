@@ -5,19 +5,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Grid, Divider, Avatar } from '@mui/material';
-import deleteIcon from '../../static/icons/delete.svg';
-import addIcon from '../../static/icons/addIcon.svg';
+import deleteIcon from '../../../static/icons/delete.svg';
+import addIcon from '../../../static/icons/addIcon.svg';
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import Me from '../../static/icons/viren.jpg';
-import CandidateSkills from './CandidateSkills';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
-import CandidateEducation from './CandidateEducation';
-import CandidateWorkExperience from './CandidateWorkExperience';
-import InformationVideo from '../../shared-components/informationVideo/InformationVideo';
+import CandidateSkills from './candidateViewApplication/CandidateSkills';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { IappliedJobsApplications } from '../../../typings/appliedJobsApplications';
+import CandidateEducation from './candidateViewApplication/CandidateEducation';
+import CandidateWorkExperience from './candidateViewApplication/CandidateWorkExperience';
+import InformationVideo from '../../../shared-components/informationVideo/InformationVideo';
 import { AnyMap } from '@reduxjs/toolkit/node_modules/immer/dist/internal';
-import UserActionConfirmation from '../../shared-components/userAction/UserActionConfirmation';
+import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
 
 interface IPROPS {
   open: boolean;

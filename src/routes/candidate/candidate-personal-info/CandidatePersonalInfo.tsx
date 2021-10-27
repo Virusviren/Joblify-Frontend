@@ -12,23 +12,23 @@ import {
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import CandidateSideMenu from './CandidateSideMenu';
-import Logo from '../../static/icons/Logo.svg';
+import CandidateSideMenu from '../CandidateSideMenu';
+import Logo from '../../../static/icons/Logo.svg';
 import candidatePic from '../../static/icons/viren.jpg';
-import PersonalInfo from './PersonalInfo';
-import Education from './Education';
-import WorkExperience from './WorkExperience';
-import SkillsSection from './SkillsSection';
-import Documents from './Documents';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import PersonalInfo from './personalInfo/PersonalInfo';
+import Education from './education/Education';
+import WorkExperience from './candidateWorkexperience/WorkExperience';
+import SkillsSection from './candidateSkills/SkillsSection';
+import Documents from './documents/Documents';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Redirect } from 'react-router-dom';
 import {
   getCandidate,
   getAllApplications,
   deleteApplication,
-} from '../../features/Candidate/candidateSlice';
+} from '../../../features/Candidate/candidateSlice';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/endpoints';
+import { BASE_URL } from '../../../utils/endpoints';
 import { useMutation } from 'react-query';
 
 const CandidatePersonalInfo = () => {
@@ -89,7 +89,9 @@ const CandidatePersonalInfo = () => {
                   {/* Avatar img */}
                   {candidateInfo?.profilePhoto ? (
                     <img
-                      src={candidateInfo?.profilePhoto}
+                      src={`${
+                        candidateInfo?.profilePhoto
+                      }?random_number=${new Date().getTime()}`}
                       alt='Candidate_Image'
                       style={{
                         width: '3rem',
@@ -142,17 +144,24 @@ const CandidatePersonalInfo = () => {
               {/* For Personal Info Edit section */}
 
               {/* Personal information containers */}
+
               <PersonalInfo getUserMutation={getUserMutation} />
               <Education
                 getUserMutation={getUserMutation}
                 candidateInfo={candidateInfo}
               />
-              <WorkExperience />
+              <WorkExperience
+                getUserMutation={getUserMutation}
+                candidateInfo={candidateInfo}
+              />
               <SkillsSection
                 getUserMutation={getUserMutation}
                 candidateInfo={candidateInfo}
               />
-              <Documents />
+              <Documents
+                getUserMutation={getUserMutation}
+                candidateInfo={candidateInfo}
+              />
             </Grid>
           </>
         )}

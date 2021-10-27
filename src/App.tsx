@@ -9,8 +9,8 @@ import Browse from './routes/browse/Browse';
 import Hr from './routes/hr/Hr';
 import JobList from './routes/hr/components/JobList';
 import PersonalInfo from './routes/hr/components/PersonalInfo';
-import CandidateAppliedJobs from './routes/candidate/CandidateAppliedJobs';
-import CandidatePersonalInfo from './routes/candidate/CandidatePersonalInfo';
+import CandidateAppliedJobs from './routes/candidate/candidateAppliedJobs/CandidateAppliedJobs';
+import CandidatePersonalInfo from './routes/candidate/candidate-personal-info/CandidatePersonalInfo';
 
 function App() {
   return (

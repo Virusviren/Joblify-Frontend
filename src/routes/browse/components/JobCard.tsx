@@ -74,7 +74,7 @@ const JobCard = ({
           ></img>
         </Grid>
         <Grid item>
-          <h2>{jobItem.jobId}</h2>
+          <h2>{jobItem.jobTitle}</h2>
           <p style={{ marginTop: '1rem' }}>
             {jobItem.details.companyInfo.address}
           </p>

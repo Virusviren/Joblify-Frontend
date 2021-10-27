@@ -7,14 +7,17 @@ import {
   FormControl,
   Button,
   Divider,
+  Autocomplete,
+  TextField,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import axios from 'axios';
-import { BASE_URL } from '../../utils/endpoints';
-import { Icandidateinfo } from '../../typings/candidate';
+import { BASE_URL } from '../../../../utils/endpoints';
+import { Icandidateinfo } from '../../../../typings/candidate';
+import { skillsList } from '../../../../static/data/skillsList';
 interface ChipData {
   label: string;
 }
@@ -29,7 +32,7 @@ interface IPROPS {
 
 const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
   const [edit, setEdit] = useState(false);
-  const [skills, setSkills] = useState(candidateInfo.skills);
+  const [skills, setSkills] = useState(candidateInfo.skills!);
 
   const token = localStorage.getItem('token')!;
   const editSkills = async () => {
@@ -123,45 +126,50 @@ const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
       <div
         style={{ backgroundColor: '#E0E0E0', height: '4px', width: '100%' }}
       ></div>
-      <Grid container padding={3} gap={8}>
-        <Grid container alignItems='center'>
-          {edit ? (
-            <div>
-              {chipData?.map((data) => {
-                return (
-                  <Chip
-                    onDelete={handleDelete(data)}
-                    label={data}
-                    color='primary'
-                    style={{
-                      marginRight: '0.5rem ',
-                      fontSize: '1.1rem',
-                      fontWeight: 'bold',
-                      padding: '0.5rem 0.25rem',
-                    }}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <div>
-              {chipData?.map((data) => {
-                return (
-                  <Chip
-                    label={data}
-                    color='primary'
-                    style={{
-                      marginRight: '0.5rem ',
-                      fontSize: '1.1rem',
-                      fontWeight: 'bold',
-                      padding: '0.5rem 0.25rem',
-                    }}
-                  />
-                );
-              })}
-            </div>
-          )}
-        </Grid>
+      <Grid container padding={3} gap={8} alignItems='center'>
+        {edit ? (
+          <Autocomplete
+            multiple
+            fullWidth
+            includeInputInList
+            id='tags-standard'
+            options={skillsList}
+            getOptionLabel={(option) => option}
+            value={skills}
+            // onChange={(e, value) => {
+            //   setSkills([...skills, value]);
+
+            //   console.log(skills);
+            // }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                fullWidth
+                // sx={{ width: '100%' }}
+                variant='standard'
+                label='Skills'
+                placeholder='Add Skills'
+              />
+            )}
+          />
+        ) : (
+          <div>
+            {chipData?.map((data) => {
+              return (
+                <Chip
+                  label={data}
+                  color='primary'
+                  style={{
+                    marginRight: '0.5rem ',
+                    fontSize: '1.1rem',
+                    fontWeight: 'bold',
+                    padding: '0.5rem 0.25rem',
+                  }}
+                />
+              );
+            })}
+          </div>
+        )}
       </Grid>
     </div>
   );

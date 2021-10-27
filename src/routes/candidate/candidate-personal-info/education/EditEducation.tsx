@@ -12,12 +12,12 @@ import {
 import DateAdapter from '@mui/lab/AdapterMoment';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { levels } from '../../static/data/educationLevel';
+import { levels } from '../../../../static/data/educationLevel';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
-import { BASE_URL } from '../../utils/endpoints';
+import { BASE_URL } from '../../../../utils/endpoints';
 import axios from 'axios';
 import moment from 'moment';
-import { Education } from '../../typings/appliedJobsApplications';
+import { Education } from '../../../../typings/appliedJobsApplications';
 interface IPROPS {
   setEditEducation: React.Dispatch<React.SetStateAction<boolean>>;
   getUserMutation: any;
