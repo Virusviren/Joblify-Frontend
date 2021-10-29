@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Grid,
   Select,
@@ -32,15 +32,20 @@ interface IPROPS {
 
 const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
   const [edit, setEdit] = useState(false);
-  const [skills, setSkills] = useState(candidateInfo.skills!);
-
+  const [skills, setSkills] = useState<any>(candidateInfo.skills);
+  const [skill, setSkill] = useState('');
   const token = localStorage.getItem('token')!;
+
+  useEffect(() => {
+    console.log(skills);
+  }, [skills]);
+
   const editSkills = async () => {
     try {
       await axios.patch(
         `${BASE_URL}candidate/profile/edit-skills`,
         {
-          skills: [],
+          skills: skills,
         },
         {
           headers: {
@@ -54,10 +59,10 @@ const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
     }
   };
 
-  const [chipData, setChipData] = useState(skills);
-  const handleDelete = (chipToDelete: ChipData) => () => {
-    setChipData((chips) => chips?.filter((chip) => chip !== chipToDelete));
-  };
+  // const [chipData, setChipData] = useState(skills);
+  // const handleDelete = (chipToDelete: ChipData) => () => {
+  //   setChipData((chips) => chips?.filter((chip) => chip !== chipToDelete));
+  // };
   return (
     <div
       style={{
@@ -100,6 +105,7 @@ const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
               }}
               onClick={() => {
                 setEdit(false);
+                editSkills();
               }}
             >
               Save
@@ -135,26 +141,29 @@ const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
             id='tags-standard'
             options={skillsList}
             getOptionLabel={(option) => option}
-            value={skills}
-            // onChange={(e, value) => {
-            //   setSkills([...skills, value]);
-
-            //   console.log(skills);
+            // inputValue={skill}
+            // onInputChange={(e, newValue) => {
+            //   setSkill(newValue);
             // }}
+            value={skills}
+            onChange={(e, v) => {
+              setSkills([...v]);
+            }}
+            filterSelectedOptions
             renderInput={(params) => (
               <TextField
                 {...params}
                 fullWidth
                 // sx={{ width: '100%' }}
                 variant='standard'
-                label='Skills'
+                // label='Skills'
                 placeholder='Add Skills'
               />
             )}
           />
         ) : (
           <div>
-            {chipData?.map((data) => {
+            {candidateInfo.skills?.map((data) => {
               return (
                 <Chip
                   label={data}

@@ -20,7 +20,10 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { countries } from '../../../static/data/countries';
 import moment from 'moment';
 import { ModeCommentOutlined } from '@mui/icons-material';
-import { Education as Ieducation } from '../../../typings/appliedJobsApplications';
+import {
+  Education as Ieducation,
+  WorkExperience as IworkExperience,
+} from '../../../typings/appliedJobsApplications';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -59,22 +62,24 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   const [education, setEducation] = useState({
     level: '',
     universityName: '',
-    startingDate: 'iv',
-    endingDate: 'id',
+    startingDate: moment().format('yyyy'),
+    endingDate: moment().format('yyyy'),
   });
   const [allEducation, setAllEducation] = useState<Ieducation[]>([]);
 
   // State for WorkExperience
 
-  // const [workExperience, setWorkExperience] = useState([
-  //   {
-  //     companyName: '',
-  //     position: '',
-  //     startingDate: '',
-  //     endingDate: '',
-  //     description: '',
-  //   },
-  // ]);
+  const [workExperience, setWorkExperience] = useState({
+    companyName: '',
+    position: '',
+    startingDate: moment().format('yyyy'),
+    endingDate: moment().format('yyyy'),
+    description: '',
+  });
+
+  const [allWorkExperience, setAllWorkExperience] = useState<IworkExperience[]>(
+    []
+  );
   // Functions
   const handleChangePersonalInfo: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -86,16 +91,35 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   ) => {
     setEducation({ ...education, [e.target.name]: e.target.value });
   };
+
   const addEducationItem = () => {
     setAllEducation([...allEducation, education]);
-    console.log(allEducation);
-    // setEducation({
-    //   level: '',
-    //   universityName: '',
-    //   startingDate: '',
-    //   endingDate: '',
-    // });
+
+    setEducation({
+      level: '',
+      universityName: '',
+      startingDate: moment().format('yyyy'),
+      endingDate: moment().format('yyyy'),
+    });
   };
+
+  const handleChangWorkExperience: React.ChangeEventHandler<HTMLInputElement> =
+    (e) => {
+      setWorkExperience({ ...workExperience, [e.target.name]: e.target.value });
+    };
+  const addWorkExperienceItem = () => {
+    console.log('hello');
+
+    setAllWorkExperience([...allWorkExperience, workExperience]);
+    setWorkExperience({
+      companyName: '',
+      position: '',
+      startingDate: moment().format('yyyy'),
+      endingDate: moment().format('yyyy'),
+      description: '',
+    });
+  };
+
   // Handle Submit
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -106,11 +130,10 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
       dateOfBirth: moment(dateOfBirth).format('DD-MM-YYYY'),
     };
 
-    console.log(personalDataToSubmit);
+    const educationDetails = addEducationItem;
+    console.log(allEducation);
   };
-  // useEffect(() => {
-  //   console.log(allEducation);
-  // }, [allEducation]);
+
   return (
     <Dialog
       open={open}
@@ -269,7 +292,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
           <Grid
             container
             style={{ marginBottom: '3.5rem' }}
-            alignItems={'center'}
+            // alignItems={'center'}
             justifyContent='space-between'
           >
             <Grid item xl={10} lg={10}>
@@ -335,35 +358,36 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
               </Grid>
               {/* Map of the educations */}
 
-              {/* {allEducation.length > 1 &&
-                allEducation.slice(2, allEducation.length - 1).map((item) => (
-                  <Grid container>
-                    <Grid item xl={3} lg={3}>
-                      <p className='input-title'>Level of education</p>
-                      <p>{item.level}</p>
-                    </Grid>
-                    <Grid item xl={3} lg={3}>
-                      <p className='input-title'>School/University Name</p>
-                      <p>{item.universityName}</p>
-                    </Grid>
-                    <Grid item xl={3} lg={3}>
-                      <p className='input-title'>From</p>
-                      <p>{item.startingDate}</p>
-                    </Grid>
-                    <Grid item xl={3} lg={3}>
-                      <p className='input-title'>To</p>
-                      <p>{item.endingDate}</p>
-                    </Grid>
+              {allEducation.map((item) => (
+                <Grid container marginTop={4}>
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>Level of education</p>
+                    <h3>{item.level}</h3>
                   </Grid>
-                ))} */}
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>School/University Name</p>
+                    <h3>{item.universityName}</h3>
+                  </Grid>
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>From</p>
+                    <h3>{item.startingDate}</h3>
+                  </Grid>
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>To</p>
+                    <h3>{item.endingDate}</h3>
+                  </Grid>
+                </Grid>
+              ))}
 
               {/* Finsh here */}
             </Grid>
-            <Grid item xl={2} lg={2}>
+            <Grid item xl={2} lg={2} paddingLeft={2}>
               <img
                 src={addIcon}
                 alt='Add icon'
-                onClick={addEducationItem}
+                onClick={() => {
+                  addEducationItem();
+                }}
                 style={{ cursor: 'pointer' }}
               />
             </Grid>
@@ -381,36 +405,118 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
           <Grid
             container
             style={{ marginBottom: '3.5rem' }}
-            alignItems='center'
+            // alignItems='center'
             justifyContent='space-between'
           >
             <Grid item xl={10} lg={10}>
               <Grid container>
                 <Grid item xl={3} lg={3}>
                   <p className='input-title'>Company Name</p>
-                  <input className='submit-application-input' type='text' />
+                  <input
+                    className='submit-application-input'
+                    type='text'
+                    name='companyName'
+                    value={workExperience.companyName}
+                    onChange={handleChangWorkExperience}
+                  />
                 </Grid>
                 <Grid item xl={3} lg={3}>
                   <p className='input-title'>Position</p>
-                  <input className='submit-application-input' type='text' />
+                  <input
+                    className='submit-application-input'
+                    type='text'
+                    name='position'
+                    value={workExperience.position}
+                    onChange={handleChangWorkExperience}
+                  />
                 </Grid>
-                <Grid item xl={3} lg={3}>
+                <Grid xl={3} lg={3} paddingRight={1}>
                   <p className='input-title'>From</p>
-                  <input className='submit-application-input' type='text' />
+                  <LocalizationProvider dateAdapter={DateAdapter}>
+                    <DesktopDatePicker
+                      views={['year']}
+                      inputFormat='YYYY'
+                      value={workExperience.startingDate}
+                      onChange={(newValue) => {
+                        setWorkExperience({
+                          ...workExperience,
+                          startingDate: moment(newValue).format('yyyy'),
+                        });
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} name='dateOfBirth' />
+                      )}
+                    />
+                  </LocalizationProvider>
                 </Grid>
-                <Grid item xl={3} lg={3}>
+                <Grid item xl={3} lg={3} paddingRight={1}>
                   <p className='input-title'>To</p>
-                  <input className='submit-application-input' type='text' />
+                  <LocalizationProvider dateAdapter={DateAdapter}>
+                    <DesktopDatePicker
+                      views={['year']}
+                      inputFormat='YYYY'
+                      value={workExperience.endingDate}
+                      onChange={(newValue) => {
+                        setWorkExperience({
+                          ...workExperience,
+                          endingDate: moment(newValue).format('yyyy'),
+                        });
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} name='dateOfBirth' />
+                      )}
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xl={12} lg={12} paddingTop={4}>
                   <p className='input-title'>Description</p>
-                  <input className='submit-application-input' type='text' />
+                  <input
+                    className='submit-application-input'
+                    type='text'
+                    name='description'
+                    value={workExperience.description}
+                    onChange={handleChangWorkExperience}
+                  />
                 </Grid>
               </Grid>
+              {/* Map of workExperience */}
+              {allWorkExperience.map((item) => (
+                <Grid container marginTop={4}>
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>Company Name</p>
+                    <h3>{item.companyName}</h3>
+                  </Grid>
+                  <Grid item xl={3} lg={3}>
+                    <p className='input-title'>Position</p>
+                    <h3>{item.position}</h3>
+                  </Grid>
+                  <Grid xl={3} lg={3} paddingRight={1}>
+                    <p className='input-title'>From</p>
+                    <h3>{item.startingDate}</h3>
+                  </Grid>
+                  <Grid item xl={3} lg={3} paddingRight={1}>
+                    <p className='input-title'>To</p>
+                    <h3>{item.endingDate}</h3>
+                  </Grid>
+                  <Grid item xl={12} lg={12} paddingTop={4}>
+                    <p className='input-title'>Description</p>
+                    <h3>{item.description}</h3>
+                  </Grid>
+                </Grid>
+              ))}
+
+              {/* End of workExperience */}
             </Grid>
 
-            <Grid item xl={2} lg={2}>
-              <img src={addIcon} alt='Add icon' />
+            <Grid item xl={2} lg={2} paddingLeft={2}>
+              <img
+                src={addIcon}
+                alt='Add icon'
+                onClick={() => {
+                  addWorkExperienceItem();
+                }}
+                style={{ cursor: 'pointer' }}
+              />
             </Grid>
           </Grid>
 
