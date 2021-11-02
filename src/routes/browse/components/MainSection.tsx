@@ -51,7 +51,6 @@ const MainSection = () => {
           activeJobCardId: data[0]._id.toString(),
         };
       });
-      console.log(activeJobDetails);
     }
   }, [filters]);
   useEffect(() => {
@@ -71,9 +70,6 @@ const MainSection = () => {
     // console.log(filters);
 
     if (!isFetching) {
-      console.log(activeJobCardId.activeJobCardId);
-      console.log(filters);
-
       const resultsType = filters?.map((item) => {
         return data.filter((job: IJobs) => job.type === item);
       });
@@ -134,7 +130,6 @@ const MainSection = () => {
             ? data
                 .filter((list: any) => list.type === filters[1])
                 .map((job: IJobs, index: number) => {
-                  console.log(index === activeJobCardId.activeJobCardIndex);
                   return (
                     <JobCard
                       isActive={
@@ -152,8 +147,6 @@ const MainSection = () => {
                   );
                 })
             : data.map((job: IJobs, index: number) => {
-                console.log(activeJobCardId?.activeJobCardIndex);
-
                 return (
                   <JobCard
                     isActive={

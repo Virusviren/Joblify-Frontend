@@ -33,7 +33,7 @@ interface IPROPS {
 const SkillsSection = ({ getUserMutation, candidateInfo }: IPROPS) => {
   const [edit, setEdit] = useState(false);
   const [skills, setSkills] = useState<any>(candidateInfo.skills);
-  const [skill, setSkill] = useState('');
+
   const token = localStorage.getItem('token')!;
 
   useEffect(() => {

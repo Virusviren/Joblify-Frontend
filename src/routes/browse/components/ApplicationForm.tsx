@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Grid, Select, FormControl, MenuItem } from '@mui/material';
+import {
+  Grid,
+  Select,
+  FormControl,
+  MenuItem,
+  Autocomplete,
+} from '@mui/material';
 import deleteIcon from '../../../static/icons/delete.svg';
 import addIcon from '../../../static/icons/addIcon.svg';
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,6 +30,7 @@ import {
   Education as Ieducation,
   WorkExperience as IworkExperience,
 } from '../../../typings/appliedJobsApplications';
+import { skillsList } from '../../../static/data/skillsList';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -80,6 +87,8 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   const [allWorkExperience, setAllWorkExperience] = useState<IworkExperience[]>(
     []
   );
+  // State for Skills
+  const [skills, setSkills] = useState<any>([]);
   // Functions
   const handleChangePersonalInfo: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -119,10 +128,19 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
       description: '',
     });
   };
+  // Function for handling Upload documents and video
+  // let formData = new FormData();
+  const [doc, setDoc] = useState<File>();
+
+  const handelCvUpload = () => {
+    // setOpen(true);
+    console.log('changed');
+  };
 
   // Handle Submit
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+
     const personalDataToSubmit = {
       ...personalInfo,
       email: email,
@@ -131,7 +149,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
     };
 
     const educationDetails = addEducationItem;
-    console.log(allEducation);
+    console.log(doc);
   };
 
   return (
@@ -139,6 +157,11 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
       open={open}
       disableEscapeKeyDown={true}
       maxWidth='lg'
+      keepMounted
+      disablePortal
+      onClose={() => {
+        setOpen(true);
+      }}
       BackdropProps={{
         style: {
           backdropFilter: 'blur(15px)',
@@ -530,13 +553,32 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
             Skills
           </p>
           <Grid container style={{ marginBottom: '3.5rem' }}>
-            <p className='input-title' style={{ marginBottom: '1rem' }}>
-              Add Skills
-            </p>
-            <input
-              className='submit-application-input'
-              type='text'
-              style={{ width: '100%' }}
+            <Autocomplete
+              multiple
+              fullWidth
+              includeInputInList
+              id='tags-standard'
+              options={skillsList}
+              getOptionLabel={(option) => option}
+              // inputValue={skill}
+              // onInputChange={(e, newValue) => {
+              //   setSkill(newValue);
+              // }}
+              value={skills}
+              onChange={(e, v) => {
+                setSkills([...v]);
+              }}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  // sx={{ width: '100%' }}
+                  variant='standard'
+                  // label='Skills'
+                  placeholder='Add Skills'
+                />
+              )}
             />
           </Grid>
 
@@ -551,13 +593,17 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
           </p>
           <Grid container gap={3}>
             <Grid item>
-              <label htmlFor='contained-button-file1'>
+              <label htmlFor='contained-button-cvUpload'>
                 <Input
-                  id='contained-button-file1'
-                  multiple
+                  id='contained-button-cvUpload'
                   type='file'
                   accept='application/pdf'
+                  onChange={(e) => {
+                    setOpen(true);
+                    console.log(e.target.files);
+                  }}
                 />
+
                 <Button
                   component='span'
                   variant='contained'
@@ -570,7 +616,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                     margin: '2rem 0 2rem auto',
                   }}
                 >
-                  Upload
+                  Upload CV
                 </Button>
               </label>
             </Grid>
@@ -586,7 +632,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                   margin: '2rem 0 2rem auto',
                 }}
               >
-                Upload CV
+                Upload Cover Letter
               </Button>
             </Grid>
             <Grid item>
