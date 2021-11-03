@@ -30,7 +30,7 @@ import { useMutation } from 'react-query';
 import { getApplicationsList, getHr } from '../../features/Hr/hr.Slice';
 
 const Hr = () => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')!;
   const hrInfo = useAppSelector((state) => state.hr.hrInfo);
   const applicationList = useAppSelector((state) => state.hr.applicationsList);
   const dispatch = useAppDispatch();
@@ -60,6 +60,26 @@ const Hr = () => {
     onError: () => {},
   });
 
+  const rejectApplication = async (id: string) => {
+    await axios.patch(`${BASE_URL}hr/reject/${id}`, null, {
+      headers: { 'x-auth-token': token },
+    });
+    getAllApplicationsMutation.mutate(token);
+  };
+
+  const proccedTonextRound = async (id: string, status: number) => {
+    await axios.patch(
+      `${BASE_URL}hr/stage/${id}`,
+      {
+        newStatus: status + 1,
+      },
+      {
+        headers: { 'x-auth-token': token },
+      }
+    );
+    getAllApplicationsMutation.mutate(token);
+  };
+
   useEffect(() => {
     token && getHrMutation.mutate(token);
     token && getAllApplicationsMutation.mutate(token);
@@ -68,7 +88,7 @@ const Hr = () => {
   if (token !== '' && localStorage.getItem('userType') === 'Hr') {
     return (
       <Grid container>
-        {getHrMutation.isLoading ? (
+        {getAllApplicationsMutation.isLoading && getHrMutation.isLoading ? (
           <Grid container textAlign='center'>
             <CircularProgress size={60} sx={{ margin: '2rem auto' }} />
           </Grid>
@@ -175,7 +195,12 @@ const Hr = () => {
                   <p style={{ color: '#686868' }}>
                     showing total applications{'  '}{' '}
                     <span style={{ color: 'black' }}>
-                      {hrInfo?.jobsPosted?.length}
+                      {/* {hrInfo?.jobsPosted?.length} */}
+                      {
+                        applicationList.filter(
+                          (application) => application?.status > 0
+                        ).length
+                      }
                     </span>
                   </p>
                 </Grid>
@@ -232,9 +257,18 @@ const Hr = () => {
                     </Select>
                   </FormControl>
 
-                  {applicationList.map((application, index) => {
-                    return <Candidate key={index} application={application} />;
-                  })}
+                  {applicationList
+                    .filter((application) => application?.status > 0)
+                    .map((application, index) => {
+                      return (
+                        <Candidate
+                          key={index}
+                          application={application}
+                          rejectApplication={rejectApplication}
+                          proccedTonextRound={proccedTonextRound}
+                        />
+                      );
+                    })}
 
                   <CustomPagination />
                 </Grid>

@@ -12,15 +12,22 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import candidatePic from '../../../static/icons/viren.jpg';
 import RoundInfo from '../../../shared-components/roundInfo/RoundInfo';
 import ViewApplication from './ViewApplication';
-import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
+
 import { IappliedJobsApplications } from '../../../typings/appliedJobsApplications';
 import moment from 'moment';
+import UserActionConfirmationHr from '../../../shared-components/userActionHr/UserActionConfirmationHr';
 
 interface IPROPS {
   application: IappliedJobsApplications;
+  rejectApplication: (id: string) => Promise<void>;
+  proccedTonextRound: (id: string, status: number) => Promise<void>;
 }
 
-const Candidate = ({ application }: IPROPS) => {
+const Candidate = ({
+  application,
+  rejectApplication,
+  proccedTonextRound,
+}: IPROPS) => {
   const [open, setOpen] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   return (
@@ -101,12 +108,22 @@ const Candidate = ({ application }: IPROPS) => {
           onClick={() => setOpenConfirmation(true)}
         />
       </Grid>
-      <ViewApplication open={open} setOpen={setOpen} />
-      <UserActionConfirmation
+      <ViewApplication
+        open={open}
+        setOpen={setOpen}
+        application={application}
+        openConfirmation={openConfirmation}
+        setOpenConfirmation={setOpenConfirmation}
+        rejectApplication={rejectApplication}
+        proccedTonextRound={proccedTonextRound}
+      />
+      <UserActionConfirmationHr
         title={'Are You Sure ?'}
-        message={'Do you want to reject it'}
+        message={'Do you want to reject it.'}
         open={openConfirmation}
         setOpen={setOpenConfirmation}
+        rejectApplication={rejectApplication}
+        idOfApplication={application?._id}
       />
     </Grid>
   );

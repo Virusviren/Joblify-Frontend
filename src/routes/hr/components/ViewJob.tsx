@@ -10,21 +10,24 @@ import Checkbox from '@mui/material/Checkbox';
 import Me from '../../../static/icons/viren.jpg';
 import Skills from './Skills';
 import Button from '@mui/material/Button';
-import CompanyLogo from '../../../static/icons/companyLogo.svg';
-import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
+import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
+import { IJobs } from '../../../typings/jobs';
+import UserActionDeleteJobHr from '../../../shared-components/userActionDeleteJobHr/UserActionDeleteJobHr';
 
 interface IPROPS {
   open: boolean;
   setOpen(open: boolean): any;
+  job: IJobs;
+  deleteJob: (id: string) => Promise<void>;
 }
 
-const ViewJob = ({ open, setOpen }: IPROPS) => {
+const ViewJob = ({ open, setOpen, job, deleteJob }: IPROPS) => {
   const [OpenUserConfirmation, setOpenUserConfirmation] = useState(false);
   return (
     <Dialog
       open={open}
       disableEscapeKeyDown={true}
-      maxWidth='lg'
+      maxWidth='xl'
       BackdropProps={{
         style: {
           backdropFilter: 'blur(15px)',
@@ -37,22 +40,23 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
           <Grid item>
             <h4>
               Job title{' '}
-              <span style={{ color: '#686868' }}>
-                Senior Frontend Developer
-              </span>
+              <span style={{ color: '#686868' }}>{job?.jobTitle}</span>
             </h4>
           </Grid>
-          <Grid item style={{ marginLeft: '5rem' }}>
+          <Grid item style={{ marginLeft: '30rem' }}>
             <h4>
               Job Id
-              <span style={{ color: '#686868' }}> #12345678</span>
+              <span style={{ color: '#686868' }}>
+                {' '}
+                #{job._id?.toString()?.substring(0, 10)}
+              </span>
             </h4>
           </Grid>
           <Grid item>
             <img
               src={deleteIcon}
               alt='close img'
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', marginLeft: '1rem' }}
               onClick={() => {
                 setOpen(false);
               }}
@@ -69,7 +73,7 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
           marginLeft={6}
           marginRight={6}
         >
-          <Grid item xl={10} lg={10}>
+          <Grid item xl={9} lg={9}>
             <p
               style={{
                 fontWeight: 'bold',
@@ -133,11 +137,15 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
             <Grid container>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Company Name</p>
-                <h3 style={{ marginTop: '1rem' }}>Slack Inc.</h3>
+                <h3 style={{ marginTop: '1rem' }}>
+                  {job?.details?.companyInfo?.name}
+                </h3>
               </Grid>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Address</p>
-                <h3 style={{ marginTop: '1rem' }}>Lublin, Poland</h3>
+                <h3 style={{ marginTop: '1rem' }}>
+                  {job?.details?.companyInfo?.address}
+                </h3>
               </Grid>
             </Grid>
           </Grid>
@@ -169,17 +177,7 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
             marginRight: '3rem',
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-          molestiae consectetur ducimus repellendus, ipsa dolor, perspiciatis
-          sapiente illum officia voluptas odit, corporis adipisci maiores
-          architecto veritatis fuga quas animi pariatur. Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Quia molestiae consectetur ducimus
-          repellendus, ipsa dolor, perspiciatis sapiente illum officia voluptas
-          odit, corporis adipisci maiores architecto veritatis fuga quas animi
-          pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Quia molestiae consectetur ducimus repellendus, ipsa dolor,
-          perspiciatis sapiente illum officia voluptas odit, corporis adipisci
-          maiores architecto veritatis fuga quas animi pariatur.
+          {job?.overview}
         </h3>
 
         <p
@@ -207,38 +205,28 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
             marginRight: '3rem',
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-          molestiae consectetur ducimus repellendus, ipsa dolor, perspiciatis
-          sapiente illum officia voluptas odit, corporis adipisci maiores
-          architecto veritatis fuga quas animi pariatur. Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Quia molestiae consectetur ducimus
-          repellendus, ipsa dolor, perspiciatis sapiente illum officia voluptas
-          odit, corporis adipisci maiores architecto veritatis fuga quas animi
-          pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Quia molestiae consectetur ducimus repellendus, ipsa dolor,
-          perspiciatis sapiente illum officia voluptas odit, corporis adipisci
-          maiores architecto veritatis fuga quas animi pariatur.
+          {job?.requirements}
         </h3>
         <Grid container marginLeft={6} marginRight={6}>
           <Grid item xl={3} lg={3}>
             <h4 style={{ color: '#686868', marginBottom: '1rem' }}>
               Experience
             </h4>
-            <h3>Minimum 1 year</h3>
+            <h3>{job?.experience}</h3>
           </Grid>
           <Grid item xl={3} lg={3}>
             <h4 style={{ color: '#686868', marginBottom: '1rem' }}>
               Senority Level
             </h4>
-            <h3>Senior Level</h3>
+            <h3>{job?.seniorityLevel}</h3>
           </Grid>
           <Grid item xl={3} lg={3}>
             <h4 style={{ color: '#686868', marginBottom: '1rem' }}>Job Type</h4>
-            <h3>Full Time</h3>
+            <h3>{job?.type}</h3>
           </Grid>
           <Grid item xl={3} lg={3}>
             <h4 style={{ color: '#686868', marginBottom: '1rem' }}>Salary</h4>
-            <h3>$5000/month</h3>
+            <h3>{job?.salary}/month</h3>
           </Grid>
         </Grid>
       </DialogContent>
@@ -247,7 +235,6 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
         <Grid container alignItems='center' gap={6}>
           <Grid item>
             <Button
-              onClick={() => setOpen(false)}
               variant='contained'
               color='success'
               style={{
@@ -279,11 +266,13 @@ const ViewJob = ({ open, setOpen }: IPROPS) => {
               Remove
             </Button>
           </Grid>
-          <UserActionConfirmation
+          <UserActionDeleteJobHr
             title={'Are You Sure'}
             message={'Do you want to delete this job ?'}
             open={OpenUserConfirmation}
             setOpen={setOpenUserConfirmation}
+            deleteJob={deleteJob}
+            idOfJob={job?._id}
           />
         </Grid>
       </DialogActions>

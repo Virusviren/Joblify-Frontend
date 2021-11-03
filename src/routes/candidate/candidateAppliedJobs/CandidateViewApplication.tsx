@@ -96,7 +96,7 @@ const CandidateViewApplication = ({
               </span>
             </h4>
           </Grid>
-          <Grid item>
+          <Grid item marginLeft={3}>
             <img
               src={deleteIcon}
               alt='close img'
@@ -143,14 +143,14 @@ const CandidateViewApplication = ({
                 src={candidateProfilePic}
                 alt='Candidate_Image'
                 style={{
-                  width: '8rem',
-                  height: '8rem',
+                  width: '5rem',
+                  height: '5rem',
                   borderRadius: '50%',
                   backgroundColor: '#c4c4c4',
                 }}
               />
             ) : (
-              <Avatar color='primary'>
+              <Avatar color='primary' style={{ width: '5rem', height: '5rem' }}>
                 {/* {  if(candidatePersonalInfo)return  candidatePersonalInfo.name} */}
 
                 {/* {candidateProfilePic === ''

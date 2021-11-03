@@ -12,19 +12,16 @@ interface IPROPS {
   setOpen(open: boolean): any;
   title: String;
   message: String;
-  handelSubmit?: void;
-  withDrawApplication?: any;
-  idOfApplication?: any;
-  rejectApplication: (id: string) => Promise<void>;
+  deleteJob: (id: string) => Promise<void>;
+  idOfJob?: any;
 }
-const UserActionConfirmationHr = ({
+const UserActionDeleteJobHr = ({
   open,
   setOpen,
   title,
   message,
-  withDrawApplication,
-  idOfApplication,
-  rejectApplication,
+  deleteJob,
+  idOfJob,
 }: IPROPS) => {
   return (
     <Dialog
@@ -47,7 +44,7 @@ const UserActionConfirmationHr = ({
         <Button
           onClick={() => {
             setOpen(false);
-            rejectApplication(idOfApplication);
+            deleteJob(idOfJob as string);
           }}
         >
           Yes
@@ -57,4 +54,4 @@ const UserActionConfirmationHr = ({
   );
 };
 
-export default UserActionConfirmationHr;
+export default UserActionDeleteJobHr;

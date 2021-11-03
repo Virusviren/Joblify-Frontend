@@ -12,6 +12,7 @@ export interface IJobs {
   hrId: string;
   applicationsReceived: any[];
   __v: V;
+  createdAt: string;
 }
 
 export interface V {

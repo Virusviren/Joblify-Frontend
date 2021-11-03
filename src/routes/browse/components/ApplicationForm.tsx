@@ -599,8 +599,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                   type='file'
                   accept='application/pdf'
                   onChange={(e) => {
-                    setOpen(true);
-                    console.log(e.target.files);
+                    console.log('file changed');
                   }}
                 />
 
