@@ -17,7 +17,7 @@ const Job = ({ job, deleteJob }: IPROPS) => {
   const [OpenUserConfirmation, setOpenUserConfirmation] = useState(false);
   return (
     <Grid container padding={2} className='highlight-candidate'>
-      <Grid item xl={'auto'} lg={'auto'} marginLeft={2}>
+      <Grid item xl={3} lg={4} marginLeft={2}>
         <p style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
           {job?.jobTitle}
           <span
@@ -30,7 +30,7 @@ const Job = ({ job, deleteJob }: IPROPS) => {
             {job?.createdAt && moment(job.createdAt).format('DD MMMM YYYY')}
           </span>
         </p>
-        <p style={{ color: '#707070' }}>Google</p>
+        <p style={{ color: '#707070' }}>{job?.details.companyInfo.name}</p>
       </Grid>
       <Grid item xl={6} lg={5} textAlign='center'>
         <p style={{ fontWeight: 'bold', marginBottom: '1.3rem' }}>

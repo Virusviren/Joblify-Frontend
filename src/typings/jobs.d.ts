@@ -32,3 +32,13 @@ export interface CompanyInfo {
   name: string;
   address: string;
 }
+
+export interface PostJob {
+  title?: string;
+  overview?: string;
+  requirements?: string;
+  experience?: string;
+  seniorityLevel?: string;
+  type?: string;
+  salary?: string;
+}

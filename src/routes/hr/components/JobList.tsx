@@ -31,6 +31,7 @@ import { BASE_URL } from '../../../utils/endpoints';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { PostJob } from '../../../typings/jobs';
 
 const JobList = () => {
   const dispatch = useAppDispatch();
@@ -64,6 +65,15 @@ const JobList = () => {
 
   const deleteJob = async (id: string) => {
     await axios.delete(`${BASE_URL}hr/job/${id}`, {
+      headers: { 'x-auth-token': token },
+    });
+    getAllJobListMutation.mutate(token);
+  };
+
+  const addJob = async (data: PostJob) => {
+    console.log('token ', token);
+
+    await axios.post('http://localhost:5000/api/v1/hr/job', data, {
       headers: { 'x-auth-token': token },
     });
     getAllJobListMutation.mutate(token);
@@ -225,7 +235,7 @@ const JobList = () => {
                   paddingTop={2}
                 >
                   {/* DropDown menu */}
-                  <Grid item xl={11} lg={11}>
+                  <Grid item xl={10} lg={10}>
                     <FormControl sx={{ width: '20%', marginBottom: '2.5rem' }}>
                       <InputLabel id='demo-simple-select-label'>
                         Sort by
@@ -244,13 +254,13 @@ const JobList = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xl={1} lg={1}>
+                  <Grid item xl={2} lg={2}>
                     <Button
                       variant='contained'
                       color='primary'
                       style={{
                         borderRadius: '10px',
-                        padding: '0.5rem 1.5rem',
+                        padding: '0.5rem 2.5rem',
 
                         textTransform: 'capitalize',
                       }}
@@ -270,7 +280,7 @@ const JobList = () => {
               </Grid>
             </Grid>
           </Grid>
-          <AddJob open={open} setOpen={setOpen} />
+          <AddJob open={open} setOpen={setOpen} addJob={addJob} />
         </>
       )}
     </Grid>
