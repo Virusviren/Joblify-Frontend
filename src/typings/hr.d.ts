@@ -11,8 +11,9 @@ export interface Ihrinfo {
 }
 
 export interface PersonalInfo {
-  name?: string;
-  surname?: string;
+  name: string;
+  surname: string;
+  mobileNumber: string;
 }
 
 export interface UpdatedAt {

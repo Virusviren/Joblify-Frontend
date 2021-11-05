@@ -4,16 +4,19 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import UserActionDeleteJobHr from '../../../shared-components/userActionDeleteJobHr/UserActionDeleteJobHr';
 import ViewJob from './ViewJob';
-import { IJobs } from '../../../typings/jobs';
+import { IJobs, PostJob } from '../../../typings/jobs';
 import moment from 'moment';
 
 interface IPROPS {
   job: IJobs;
   deleteJob: (id: string) => Promise<void>;
+  editJob: (id: string, data: PostJob) => Promise<void>;
+  getAllJobListMutation: any;
 }
 
-const Job = ({ job, deleteJob }: IPROPS) => {
+const Job = ({ job, deleteJob, editJob, getAllJobListMutation }: IPROPS) => {
   const [open, setOpen] = useState(false);
+
   const [OpenUserConfirmation, setOpenUserConfirmation] = useState(false);
   return (
     <Grid container padding={2} className='highlight-candidate'>
@@ -69,7 +72,14 @@ const Job = ({ job, deleteJob }: IPROPS) => {
           onClick={() => setOpenUserConfirmation(true)}
         />
       </Grid>
-      <ViewJob open={open} setOpen={setOpen} job={job} deleteJob={deleteJob} />
+      <ViewJob
+        open={open}
+        setOpen={setOpen}
+        job={job}
+        deleteJob={deleteJob}
+        editJob={editJob}
+        getAllJobListMutation={getAllJobListMutation}
+      />
       <UserActionDeleteJobHr
         title={'Are You Sure'}
         message={'Do you want to delete this job ?'}

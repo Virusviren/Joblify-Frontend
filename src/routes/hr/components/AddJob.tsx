@@ -328,7 +328,6 @@ const AddJob = ({ open, setOpen, addJob }: IPROPS) => {
               sx={{ width: '12rem' }}
               value={jobData.salary}
               name='salary'
-              label='SortBy'
               defaultValue={'$500 - $1000'}
               style={{ height: '2.2rem' }}
               onChange={(e: SelectChangeEvent<string>) => {

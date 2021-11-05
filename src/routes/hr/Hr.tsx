@@ -179,7 +179,7 @@ const Hr = () => {
                     onClick={() => {
                       localStorage.removeItem('token');
                       localStorage.removeItem('userType');
-                      window.location.reload();
+                      window.location.assign('/browse');
                     }}
                   >
                     Logout

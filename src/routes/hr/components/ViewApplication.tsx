@@ -117,10 +117,11 @@ const ViewApplication = ({
                 src={application?.candidateProfilePic}
                 alt='Candidate_Image'
                 style={{
-                  width: '5rem',
-                  height: '5rem',
+                  width: '6rem',
+                  height: '6rem',
                   borderRadius: '50%',
                   backgroundColor: '#c4c4c4',
+                  objectFit: 'cover',
                 }}
               />
             ) : (

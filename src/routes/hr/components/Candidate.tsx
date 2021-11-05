@@ -42,7 +42,7 @@ const Candidate = ({
             alt='Candidate_Image'
             style={{
               width: '4.5rem',
-
+              height: '4.5rem',
               borderRadius: '50%',
               objectFit: 'cover',
             }}

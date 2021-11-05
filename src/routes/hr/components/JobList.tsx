@@ -69,6 +69,11 @@ const JobList = () => {
     });
     getAllJobListMutation.mutate(token);
   };
+  const editJob = async (id: string, data: PostJob) => {
+    await axios.patch(`http://localhost:5000/api/v1/hr/job/${id}`, data, {
+      headers: { 'x-auth-token': token },
+    });
+  };
 
   const addJob = async (data: PostJob) => {
     console.log('token ', token);
@@ -179,7 +184,7 @@ const JobList = () => {
                   onClick={() => {
                     localStorage.removeItem('token');
                     localStorage.removeItem('userType');
-                    window.location.reload();
+                    window.location.assign('/browse');
                   }}
                 >
                   Logout
@@ -273,7 +278,12 @@ const JobList = () => {
                 </Grid>
 
                 {jobList?.map((job) => (
-                  <Job job={job} deleteJob={deleteJob} />
+                  <Job
+                    job={job}
+                    deleteJob={deleteJob}
+                    editJob={editJob}
+                    getAllJobListMutation={getAllJobListMutation}
+                  />
                 ))}
 
                 <CustomPagination />
