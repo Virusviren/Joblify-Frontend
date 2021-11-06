@@ -1,5 +1,5 @@
 export interface IJobs {
-  _id: ID;
+  _id: string;
   jobId: string;
   jobTitle?: string;
   details: Details;
@@ -12,6 +12,7 @@ export interface IJobs {
   hrId: string;
   applicationsReceived: any[];
   __v: V;
+  createdAt: string;
 }
 
 export interface V {
@@ -30,4 +31,14 @@ export interface CompanyInfo {
   logo: string;
   name: string;
   address: string;
+}
+
+export interface PostJob {
+  title?: string;
+  overview?: string;
+  requirements?: string;
+  experience?: string;
+  seniorityLevel?: string;
+  type?: string;
+  salary?: string;
 }

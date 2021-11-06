@@ -55,6 +55,10 @@ const LoginModal = ({
 
       localStorage.setItem('userType', JSON.parse(strDecoded).userInfo.type);
 
+      localStorage.getItem('userType') === 'Hr'
+        ? history.push('/hr-applications')
+        : history.push(history.location.pathname);
+
       history.push(history.location.pathname);
     },
     onError: () => {},

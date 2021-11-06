@@ -1,5 +1,5 @@
 export interface IappliedJobsApplications {
-  _id?: ID;
+  _id?: ID | string;
   candidateId?: ID;
   jobId?: ID;
   jobTitle?: string;

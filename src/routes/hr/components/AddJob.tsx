@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Grid, Divider, Dialog, Select, MenuItem } from '@mui/material';
+import {
+  Grid,
+  Divider,
+  Dialog,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from '@mui/material';
 import deleteIcon from '../../../static/icons/delete.svg';
 import addIcon from '../../../static/icons/addIcon.svg';
 import { styled } from '@mui/material/styles';
@@ -10,16 +17,32 @@ import Checkbox from '@mui/material/Checkbox';
 import Me from '../../../static/icons/viren.jpg';
 import Skills from './Skills';
 import Button from '@mui/material/Button';
-import CompanyLogo from '../../../static/icons/companyLogo.svg';
-import UserActionConfirmation from '../../../shared-components/userAction/UserActionConfirmation';
+import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
+import UserActionAddJobHr from '../../../shared-components/userActionAddJobHr/UserActionAddJobHr';
+import { PostJob } from '../../../typings/jobs';
 
 interface IPROPS {
   open: boolean;
   setOpen(open: boolean): any;
+  addJob: (data: PostJob) => Promise<void>;
 }
 
-const AddJob = ({ open, setOpen }: IPROPS) => {
+const AddJob = ({ open, setOpen, addJob }: IPROPS) => {
   const [OpenUserConfirmation, setOpenUserConfirmation] = useState(false);
+
+  const [jobData, setJobData] = useState({
+    title: '',
+    overview: '',
+    requirements: '',
+    experience: '',
+    seniorityLevel: 'Entry Level',
+    type: 'Full Time',
+    salary: '$500 - $1000',
+  });
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setJobData({ ...jobData, [e.target.name]: e.target.value });
+  };
+
   return (
     <Dialog
       open={open}
@@ -105,11 +128,11 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
             <Grid container>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Company Name</p>
-                <h3 style={{ marginTop: '1rem' }}>Slack Inc.</h3>
+                <h3 style={{ marginTop: '1rem' }}>Strive School</h3>
               </Grid>
               <Grid item xl={6} lg={6}>
                 <p className='input-title'>Address</p>
-                <h3 style={{ marginTop: '1rem' }}>Lublin, Poland</h3>
+                <h3 style={{ marginTop: '1rem' }}>Berlin, Germany</h3>
               </Grid>
             </Grid>
           </Grid>
@@ -144,6 +167,9 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
             className='submit-application-input'
             type='text'
             placeholder='Enter Job Title'
+            name='title'
+            value={jobData.title}
+            onChange={handleChange}
           />
         </div>
 
@@ -178,6 +204,14 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
             placeholder='Enter Job OverView'
             rows={5}
             cols={100}
+            name='overview'
+            value={jobData.overview}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setJobData({
+                ...jobData,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
         </div>
 
@@ -211,6 +245,14 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
             placeholder='Enter Job Requirements'
             rows={5}
             cols={100}
+            name='requirements'
+            value={jobData.requirements}
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+              setJobData({
+                ...jobData,
+                [e.target.name]: e.target.value,
+              });
+            }}
           />
         </div>
         <Grid container marginLeft={6} marginRight={6}>
@@ -222,6 +264,9 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
               className='submit-application-input'
               type='text'
               placeholder='Enter Experience'
+              name='experience'
+              value={jobData.experience}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xl={3} lg={3}>
@@ -229,34 +274,50 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
               Senority Level
             </h4>
             <Select
+              sx={{ width: '15rem' }}
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              // value={age}
-              label='SortBy'
-              defaultValue={10}
+              name='seniorityLevel'
+              value={jobData.seniorityLevel}
+              defaultValue={'Entry Level'}
               style={{ height: '2.2rem' }}
-              // onChange={handleChange}
+              onChange={(e: SelectChangeEvent<string>) => {
+                setJobData({
+                  ...jobData,
+                  [e.target.name]: e.target.value,
+                });
+              }}
             >
-              <MenuItem value={10}>Entry Level</MenuItem>
-              <MenuItem value={20}>Mid Level</MenuItem>
-              <MenuItem value={20}>Senior Level</MenuItem>
+              <MenuItem value={'Entry Level'} style={{ width: '15rem' }}>
+                Entry Level
+              </MenuItem>
+              <MenuItem value={'Mid Level'}>Mid Level</MenuItem>
+              <MenuItem value={'Senior Level'}>Senior Level</MenuItem>
             </Select>
           </Grid>
           <Grid item xl={3} lg={3}>
             <h4 style={{ color: '#686868', marginBottom: '1rem' }}>Job Type</h4>
             <Select
               labelId='demo-simple-select-label'
+              sx={{ width: '12rem' }}
               id='demo-simple-select'
-              // value={age}
-              label='SortBy'
-              defaultValue={10}
+              name='type'
+              value={jobData.type}
+              defaultValue={'Full Time'}
               style={{ height: '2.2rem' }}
-              // onChange={handleChange}
+              onChange={(e: SelectChangeEvent<string>) => {
+                setJobData({
+                  ...jobData,
+                  [e.target.name]: e.target.value,
+                });
+              }}
             >
-              <MenuItem value={10}>Full Time</MenuItem>
-              <MenuItem value={20}>Part Time</MenuItem>
-              <MenuItem value={20}>Internships</MenuItem>
-              <MenuItem value={20}>Remote</MenuItem>
+              <MenuItem value={'Full Time'} style={{ width: '12rem' }}>
+                Full Time
+              </MenuItem>
+              <MenuItem value={'Part Time'}>Part Time</MenuItem>
+              <MenuItem value={'Internships'}>Internships</MenuItem>
+              <MenuItem value={'Remote'}>Remote</MenuItem>
             </Select>
           </Grid>
           <Grid item xl={3} lg={3}>
@@ -264,16 +325,24 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
             <Select
               labelId='demo-simple-select-label'
               id='demo-simple-select'
-              // value={age}
-              label='SortBy'
-              defaultValue={10}
+              sx={{ width: '12rem' }}
+              value={jobData.salary}
+              name='salary'
+              defaultValue={'$500 - $1000'}
               style={{ height: '2.2rem' }}
-              // onChange={handleChange}
+              onChange={(e: SelectChangeEvent<string>) => {
+                setJobData({
+                  ...jobData,
+                  [e.target.name]: e.target.value,
+                });
+              }}
             >
-              <MenuItem value={10}>$500 - $1000</MenuItem>
-              <MenuItem value={20}>$1000 - $2000</MenuItem>
-              <MenuItem value={20}>$2000 - $3000</MenuItem>
-              <MenuItem value={20}>$3000 +</MenuItem>
+              <MenuItem value={'$500 - $1000'} style={{ width: '12rem' }}>
+                $500 - $1000
+              </MenuItem>
+              <MenuItem value={'$1000 - $2000'}>$1000 - $2000</MenuItem>
+              <MenuItem value={'$2000 - $3000'}>$2000 - $3000</MenuItem>
+              <MenuItem value={'$3000 +'}>$3000 +</MenuItem>
             </Select>
           </Grid>
         </Grid>
@@ -310,16 +379,21 @@ const AddJob = ({ open, setOpen }: IPROPS) => {
 
                 color: 'white',
               }}
-              onClick={() => setOpenUserConfirmation(true)}
+              onClick={() => {
+                setOpenUserConfirmation(true);
+              }}
             >
               Submit
             </Button>
           </Grid>
-          <UserActionConfirmation
+          <UserActionAddJobHr
             title={'Are You Sure'}
-            message={'Do you want to delete this job ?'}
+            message={'Do you want to add this job ?'}
             open={OpenUserConfirmation}
             setOpen={setOpenUserConfirmation}
+            addJob={addJob}
+            jobData={jobData}
+            closeAdd={setOpen}
           />
         </Grid>
       </DialogActions>

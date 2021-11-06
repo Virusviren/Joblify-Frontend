@@ -74,12 +74,6 @@ const CandidateAppliedJobs = () => {
   // Test
 
   const withDrawApplication = async (id: string) => {
-    // const newListOfApplication = appliedJobsApplications.filter(
-    //   (job) => job._id !== id
-    // );
-
-    // dispatch(deleteApplication(newListOfApplication));
-
     await axios.patch(`${BASE_URL}candidate/withdraw/${id}`, null, {
       headers: { 'x-auth-token': token },
     });

@@ -25,11 +25,28 @@ interface Test {
 const MainSection = () => {
   const matches = useMediaQuery('(max-width:1535px)');
   const dispatch = useAppDispatch();
+  const [data, setData] = useState<any>([]);
+  const [isFetching, setIsFetching] = useState(true);
 
   // Fetching Jobs
-  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-    fetch(`${BASE_URL}all-jobs`).then((res) => res.json())
-  );
+  //const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+  //fetch(`${BASE_URL}all-jobs`).then((res) => res.json())
+  //);
+
+  console.log('here!');
+
+  const fetchJobs = async () => {
+    try {
+      const resp = await fetch(`${BASE_URL}all-jobs`);
+      if (resp.ok) {
+        const data = await resp.json();
+        setData(data);
+        setIsFetching(false);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   // States
 
@@ -51,7 +68,6 @@ const MainSection = () => {
           activeJobCardId: data[0]._id.toString(),
         };
       });
-      console.log(activeJobDetails);
     }
   }, [filters]);
   useEffect(() => {
@@ -71,9 +87,6 @@ const MainSection = () => {
     // console.log(filters);
 
     if (!isFetching) {
-      console.log(activeJobCardId.activeJobCardId);
-      console.log(filters);
-
       const resultsType = filters?.map((item) => {
         return data.filter((job: IJobs) => job.type === item);
       });
@@ -87,6 +100,10 @@ const MainSection = () => {
     }
   }, [filters]);
 
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
   if (!isFetching) {
     return (
       <Grid
@@ -95,7 +112,7 @@ const MainSection = () => {
         gap={matches ? 6 : 7}
       >
         <Grid item xl={2} lg={2}>
-          <Filter
+          {/* <Filter
             setFilters={setFilters}
             filterName='Type of Job'
             filterOptions={jobTypes}
@@ -115,7 +132,7 @@ const MainSection = () => {
             filterOptions={salaryRanges}
             data={data}
             filters={filters}
-          />
+          /> */}
         </Grid>
         <Grid
           item
@@ -134,7 +151,6 @@ const MainSection = () => {
             ? data
                 .filter((list: any) => list.type === filters[1])
                 .map((job: IJobs, index: number) => {
-                  console.log(index === activeJobCardId.activeJobCardIndex);
                   return (
                     <JobCard
                       isActive={
@@ -152,8 +168,6 @@ const MainSection = () => {
                   );
                 })
             : data.map((job: IJobs, index: number) => {
-                console.log(activeJobCardId?.activeJobCardIndex);
-
                 return (
                   <JobCard
                     isActive={
