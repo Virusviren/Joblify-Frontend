@@ -91,7 +91,7 @@ const PersonalInfo = () => {
   const editInfo = async (data: data) => {
     console.log(data);
 
-    await axios.patch(`http://localhost:5000/api/v1/hr/profile/edit`, data, {
+    await axios.patch(`${BASE_URL}hr/profile/edit`, data, {
       headers: { 'x-auth-token': token },
     });
     getHrMutation.mutate(token);
