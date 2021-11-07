@@ -87,9 +87,9 @@ const Hr = () => {
 
   if (token !== '' && localStorage.getItem('userType') === 'Hr') {
     return (
-      <Grid container>
+      <Grid container style={{ height: '100vh' }}>
         {getAllApplicationsMutation.isLoading && getHrMutation.isLoading ? (
-          <Grid container textAlign='center'>
+          <Grid container textAlign='center' alignItems='center'>
             <CircularProgress size={60} sx={{ margin: '2rem auto' }} />
           </Grid>
         ) : (

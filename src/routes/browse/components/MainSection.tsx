@@ -108,7 +108,9 @@ const MainSection = () => {
     return (
       <Grid
         container
-        style={{ margin: matches ? '2rem 5rem' : '2rem 10rem' }}
+        style={{
+          margin: matches ? '2rem 5rem' : '2rem 10rem',
+        }}
         gap={matches ? 6 : 7}
       >
         <Grid item xl={2} lg={2}>
@@ -199,7 +201,12 @@ const MainSection = () => {
     );
   } else {
     return (
-      <Grid container textAlign='center'>
+      <Grid
+        container
+        textAlign='center'
+        alignItems='center'
+        style={{ height: '73.5vh' }}
+      >
         <CircularProgress size={60} sx={{ margin: '2rem auto' }} />
       </Grid>
     );
