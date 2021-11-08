@@ -31,6 +31,9 @@ import {
   WorkExperience as IworkExperience,
 } from '../../../typings/appliedJobsApplications';
 import { skillsList } from '../../../static/data/skillsList';
+import axios from 'axios';
+import { useMutation } from 'react-query';
+import JobApplicationSuccess from '../../../shared-components/jobApplicationSuccess/JobApplicationSuccess';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -54,10 +57,15 @@ const Input = styled('input')({
 });
 
 const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
+  const token = localStorage.getItem('token')!;
   // States
+  const [cvState, setCvState] = useState(false);
+  const [coverLetterState, setCoverLetterState] = useState(false);
+  const [videoState, setVideoState] = useState(false);
+  const [successPrompt, setSuccessPrompt] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [citizenship, setCitizenship] = useState('');
-  const [email, setEmail] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [personalInfo, setPersonalInfo] = useState({
     name: '',
     surname: '',
@@ -129,12 +137,21 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
     });
   };
   // Function for handling Upload documents and video
-  // let formData = new FormData();
-  const [doc, setDoc] = useState<File>();
+  let data = new FormData();
 
-  const handelCvUpload = () => {
+  const handleCvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setOpen(true);
-    console.log('changed');
+    data.append('cv', e.target.files![0]);
+    setCvState(true);
+  };
+
+  const handleCoverLetterUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    data.append('coverLetter', e.target.files![0]);
+    setCoverLetterState(true);
+  };
+  const handleInfoVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    data.append('video', e.target.files![0]);
+    setVideoState(true);
   };
 
   // Handle Submit
@@ -143,13 +160,72 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
 
     const personalDataToSubmit = {
       ...personalInfo,
-      email: email,
+
       citizenship: citizenship,
       dateOfBirth: moment(dateOfBirth).format('DD-MM-YYYY'),
     };
+    const email = userEmail;
+    const educationDetails = allEducation;
+    const workExperience = allWorkExperience;
+    const userSkills = skills;
 
-    const educationDetails = addEducationItem;
-    console.log(doc);
+    const formData = {
+      personalInfo: personalDataToSubmit,
+      email: email,
+      education: educationDetails,
+      workExperience: workExperience,
+      skills: userSkills,
+    };
+
+    data.append('data', JSON.stringify(formData));
+
+    console.log(data.get('cv'));
+    console.log(data.get('coverLetter'));
+    console.log(data.get('video'));
+
+    const applyForJob = async (data: any) => {
+      const response = await axios.post(
+        `http://localhost:5000/api/v1/candidate/submit/${activeJobItem._id}`,
+        data,
+        {
+          headers: { 'x-auth-token': token },
+        }
+      );
+      if (response.status === 200) {
+        setSuccessPrompt(true);
+        setDateOfBirth(null);
+        setCitizenship('');
+        setUserEmail('');
+        setPersonalInfo({
+          name: '',
+          surname: '',
+          address: '',
+          mobileNumber: '',
+        });
+        setEducation({
+          level: '',
+          universityName: '',
+          startingDate: moment().format('yyyy'),
+          endingDate: moment().format('yyyy'),
+        });
+
+        setAllEducation([]);
+        setWorkExperience({
+          companyName: '',
+          position: '',
+          startingDate: moment().format('yyyy'),
+          endingDate: moment().format('yyyy'),
+          description: '',
+        });
+        setAllWorkExperience([]);
+
+        setSkills([]);
+        setCvState(false);
+        setCoverLetterState(false);
+        setVideoState(false);
+      }
+    };
+    applyForJob(data);
   };
 
   return (
@@ -294,9 +370,9 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                     className='submit-application-input'
                     type='email'
                     required
-                    name='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name='userEmail'
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
                   />
                 </Grid>
               </Grid>
@@ -598,15 +674,14 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                   id='contained-button-cvUpload'
                   type='file'
                   accept='application/pdf'
-                  onChange={(e) => {
-                    console.log('file changed');
-                  }}
+                  onChange={handleCvUpload}
                 />
 
                 <Button
                   component='span'
                   variant='contained'
                   color='primary'
+                  disabled={cvState}
                   style={{
                     borderRadius: '10px',
                     padding: '0.5rem 3rem',
@@ -615,39 +690,65 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
                     margin: '2rem 0 2rem auto',
                   }}
                 >
-                  Upload CV
+                  {cvState ? 'Cv uploaded' : 'Upload Cv'}
                 </Button>
               </label>
             </Grid>
             <Grid item>
-              <Button
-                variant='contained'
-                color='primary'
-                style={{
-                  borderRadius: '10px',
-                  padding: '0.5rem 3rem',
-                  textTransform: 'capitalize',
+              <label htmlFor='contained-button-coverLetterUpload'>
+                <Input
+                  id='contained-button-coverLetterUpload'
+                  type='file'
+                  accept='application/pdf'
+                  onChange={handleCoverLetterUpload}
+                />
 
-                  margin: '2rem 0 2rem auto',
-                }}
-              >
-                Upload Cover Letter
-              </Button>
+                <Button
+                  component='span'
+                  variant='contained'
+                  color='primary'
+                  disabled={coverLetterState}
+                  style={{
+                    borderRadius: '10px',
+                    padding: '0.5rem 3rem',
+                    textTransform: 'capitalize',
+
+                    margin: '2rem 0 2rem auto',
+                  }}
+                >
+                  {coverLetterState
+                    ? 'CoverLetter uploaded'
+                    : ' Upload coverLetter'}
+                </Button>
+              </label>
             </Grid>
             <Grid item>
-              <Button
-                variant='contained'
-                color='primary'
-                style={{
-                  borderRadius: '10px',
-                  padding: '0.5rem 3rem',
-                  textTransform: 'capitalize',
+              <label htmlFor='contained-button-informationVideoUpload'>
+                <Input
+                  id='contained-button-informationVideoUpload'
+                  type='file'
+                  accept='video/*'
+                  onChange={handleInfoVideoUpload}
+                />
 
-                  margin: '2rem 0 2rem auto',
-                }}
-              >
-                Upload Information Video
-              </Button>
+                <Button
+                  component='span'
+                  variant='contained'
+                  color='primary'
+                  disabled={videoState}
+                  style={{
+                    borderRadius: '10px',
+                    padding: '0.5rem 3rem',
+                    textTransform: 'capitalize',
+
+                    margin: '2rem 0 2rem auto',
+                  }}
+                >
+                  {videoState
+                    ? 'Information video uploaded'
+                    : ' Upload Information Video'}
+                </Button>
+              </label>
             </Grid>
           </Grid>
         </DialogContent>
@@ -696,6 +797,13 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
           </Grid>
         </DialogActions>
       </form>
+      <JobApplicationSuccess
+        open={successPrompt}
+        setApplication={setOpen}
+        setOpen={setSuccessPrompt}
+        title={'Thanks your application'}
+        message={'Your application is submitted successfully'}
+      />
     </Dialog>
   );
 };
