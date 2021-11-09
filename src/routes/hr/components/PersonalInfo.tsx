@@ -58,6 +58,13 @@ const PersonalInfo = () => {
   const getHrMutation = useMutation(getHrDetails, {
     onSuccess: (data: any) => {
       dispatch(getHr(data));
+      console.log(data);
+
+      setData({
+        name: data.personalInfo.name,
+        surname: data.personalInfo.surname,
+        mobileNumber: data.personalInfo.mobileNumber,
+      });
     },
     onError: () => {},
   });
@@ -79,10 +86,10 @@ const PersonalInfo = () => {
   useEffect(() => {
     token && getHrMutation.mutate(token);
   }, []);
-  const [data, setData] = useState<data>({
-    name: hrInfo.personalInfo?.name,
-    surname: hrInfo.personalInfo?.surname,
-    mobileNumber: hrInfo.personalInfo?.mobileNumber,
+  const [data, setData] = useState({
+    name: '',
+    surname: '',
+    mobileNumber: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,9 +107,9 @@ const PersonalInfo = () => {
 
   if (token !== '' && localStorage.getItem('userType') === 'Hr') {
     return (
-      <Grid container>
+      <Grid container style={{ height: '100vh' }}>
         {getHrMutation.isLoading ? (
-          <Grid container textAlign='center'>
+          <Grid container textAlign='center' alignItems='center'>
             <CircularProgress size={60} sx={{ margin: '2rem auto' }} />
           </Grid>
         ) : (
@@ -145,7 +152,6 @@ const PersonalInfo = () => {
                     />
                   ) : (
                     <Avatar color='primary'>
-                      {/* {hrInfo ? hrInfo?.personalInfo?.name![0] : ''} */}
                       {hrInfo ? data?.name![0] : ''}
                     </Avatar>
                   )}
@@ -232,11 +238,14 @@ const PersonalInfo = () => {
                     ) : (
                       <Avatar
                         color='primary'
-                        style={{ width: '10rem', height: '10rem' }}
+                        style={{
+                          width: '10rem',
+                          height: '10rem',
+                          margin: '0 auto 2rem',
+                        }}
                       >
                         {/* {  if(candidatePersonalInfo)return  candidatePersonalInfo.name} */}
-                        {/* {hrInfo ? hrInfo.personalInfo?.name![0] : ''} */}
-                        {hrInfo ? data?.name![0] : ''}
+                        {hrInfo ? hrInfo.personalInfo?.name![0] : ''}
                       </Avatar>
                     )}
                   </StyledBadge>
