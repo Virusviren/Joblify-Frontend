@@ -34,6 +34,7 @@ import { skillsList } from '../../../static/data/skillsList';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import JobApplicationSuccess from '../../../shared-components/jobApplicationSuccess/JobApplicationSuccess';
+import { BASE_URL } from '../../../utils/endpoints';
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
     right: 30,
@@ -185,7 +186,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
 
     const applyForJob = async (data: any) => {
       const response = await axios.post(
-        `http://localhost:5000/api/v1/candidate/submit/${activeJobItem._id}`,
+        `${BASE_URL}candidate/submit/${activeJobItem._id}`,
         data,
         {
           headers: { 'x-auth-token': token },

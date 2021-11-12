@@ -70,7 +70,7 @@ const JobList = () => {
     getAllJobListMutation.mutate(token);
   };
   const editJob = async (id: string, data: PostJob) => {
-    await axios.patch(`http://localhost:5000/api/v1/hr/job/${id}`, data, {
+    await axios.patch(`${BASE_URL}hr/job/${id}`, data, {
       headers: { 'x-auth-token': token },
     });
   };
@@ -78,7 +78,7 @@ const JobList = () => {
   const addJob = async (data: PostJob) => {
     console.log('token ', token);
 
-    await axios.post('http://localhost:5000/api/v1/hr/job', data, {
+    await axios.post(`${BASE_URL}hr/job`, data, {
       headers: { 'x-auth-token': token },
     });
     getAllJobListMutation.mutate(token);
