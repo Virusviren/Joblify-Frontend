@@ -2,7 +2,7 @@ import { FormatColorResetRounded } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CompanyBackground from '../../../static/icons/companyBackground.svg';
-import CompanyLogo from '../../../static/icons/companyLogo.svg';
+import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
 import { IJobs } from '../../../typings/jobs';
 import ApplicationForm from './ApplicationForm';
 
@@ -21,9 +21,9 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
           src={CompanyLogo}
           alt='company logo'
           style={{
-            width: '3rem',
-            height: '3rem',
-            padding: '0.8rem',
+            width: '4rem',
+            height: '4rem',
+            padding: '0.1rem',
             border: '5px solid black',
             borderRadius: '10px',
             position: 'relative',
@@ -110,10 +110,20 @@ const JobDetails = ({ activeJobItem, filters }: IPROPS) => {
             </h4>
           </Grid>
         </Grid>
-        <h3>Overview</h3>
-        <p style={{ margin: '1.5rem 0' }}>{activeJobItem.overview}</p>
-        <h3>Requirements</h3>
-        <p style={{ margin: '1.5rem 0' }}>{activeJobItem.requirements}</p>
+        <Grid container alignItems='center'>
+          <Grid item xl={12} sm={12}>
+            <h3>Overview</h3>
+          </Grid>
+          <Grid item xl={12} sm={12}>
+            <p style={{ margin: '1.5rem 0' }}>{activeJobItem.overview}</p>
+          </Grid>
+          <Grid item xl={12} sm={12}>
+            <h3>Requirements</h3>
+          </Grid>
+          <Grid item xl={12} sm={12}>
+            <p style={{ margin: '1.5rem 0' }}>{activeJobItem.requirements}</p>
+          </Grid>
+        </Grid>
       </Grid>
       <ApplicationForm
         open={open}

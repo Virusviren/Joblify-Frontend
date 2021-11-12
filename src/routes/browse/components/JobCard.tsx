@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import React, { useEffect } from 'react';
-import CompanyLogo from '../../../static/icons/companyLogo.svg';
+import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { IJobs } from '../../../typings/jobs';
 interface JobCardProps {
@@ -69,7 +69,7 @@ const JobCard = ({
             alt='Company logo'
             style={{
               borderRadius: '10px',
-              width: isActive ? '1.4rem' : '2rem',
+              width: isActive ? '2rem' : '2.6rem',
             }}
           ></img>
         </Grid>

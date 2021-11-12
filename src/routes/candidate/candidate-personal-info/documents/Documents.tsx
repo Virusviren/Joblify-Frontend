@@ -75,8 +75,8 @@ const Documents = ({ getUserMutation, candidateInfo }: IPROPS) => {
   // Upload InfoVideo to server
   const uploadToServerInfoVideo = async (infoVideoToUpload: FormData) => {
     await axios.patch(
-      // `${BASE_URL}candidate/profile/edit/video`,
-      `http://localhost:5000/api/v1/candidate/profile/edit/video`,
+      `${BASE_URL}candidate/profile/edit/video`,
+
       infoVideoToUpload,
       {
         headers: { 'x-auth-token': token },
