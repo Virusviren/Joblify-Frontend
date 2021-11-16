@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../../shared-components/navbar/Navbar';
 import SearchJobs from './components/SearchJobs';
 import './Browse.css';
