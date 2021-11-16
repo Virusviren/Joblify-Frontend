@@ -57,6 +57,8 @@ const Input = styled('input')({
   display: 'none',
 });
 
+let data = new FormData();
+
 const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   const token = localStorage.getItem('token')!;
   // States
@@ -138,20 +140,23 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
     });
   };
   // Function for handling Upload documents and video
-  let data = new FormData();
 
   const handleCvUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setOpen(true);
     data.append('cv', e.target.files![0]);
+    console.log(data.get('cv'));
     setCvState(true);
   };
 
   const handleCoverLetterUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     data.append('coverLetter', e.target.files![0]);
+    console.log(e.target.files![0]);
     setCoverLetterState(true);
   };
   const handleInfoVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     data.append('video', e.target.files![0]);
+    console.log(e.target.files![0]);
+
+    console.log(data.get('video'));
     setVideoState(true);
   };
 
