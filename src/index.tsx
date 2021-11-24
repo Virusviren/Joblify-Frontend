@@ -7,8 +7,8 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme/theme';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 ReactDOM.render(

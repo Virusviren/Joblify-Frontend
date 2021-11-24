@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,39 +13,28 @@ import {
 } from '@mui/material';
 import deleteIcon from '../../../static/icons/delete.svg';
 import addIcon from '../../../static/icons/addIcon.svg';
-import EditIcon from '@mui/icons-material/Edit';
+
 import { styled } from '@mui/material/styles';
 import Checkbox from '@mui/material/Checkbox';
 import { IJobs } from '../../../typings/jobs';
-import { useAppSelector } from '../../../app/hooks';
-import Badge, { BadgeProps } from '@mui/material/Badge';
+
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TextField from '@mui/material/TextField';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import { countries } from '../../../static/data/countries';
 import moment from 'moment';
-import { ModeCommentOutlined } from '@mui/icons-material';
+
 import {
   Education as Ieducation,
   WorkExperience as IworkExperience,
 } from '../../../typings/appliedJobsApplications';
 import { skillsList } from '../../../static/data/skillsList';
 import axios from 'axios';
-import { useMutation } from 'react-query';
+
 import JobApplicationSuccess from '../../../shared-components/jobApplicationSuccess/JobApplicationSuccess';
 import { BASE_URL } from '../../../utils/endpoints';
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    right: 30,
-    top: 13,
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: '1rem 1rem',
-    borderRadius: '50%',
-    width: '2rem',
-    height: '2rem',
-  },
-}));
+
 interface IPROPS {
   open: boolean;
   setOpen(open: boolean): any;
@@ -163,6 +152,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
   // Handle Submit
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    console.log('viren');
 
     const personalDataToSubmit = {
       ...personalInfo,
@@ -192,6 +182,7 @@ const ApplicationForm = ({ open, setOpen, activeJobItem }: IPROPS) => {
     const applyForJob = async (data: any) => {
       const response = await axios.post(
         `${BASE_URL}candidate/submit/${activeJobItem._id}`,
+        // `http://localhost:5000/api/v1/candidate/submit/${activeJobItem._id}`,
         data,
         {
           headers: { 'x-auth-token': token },

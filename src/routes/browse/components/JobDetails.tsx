@@ -1,7 +1,6 @@
-import { FormatColorResetRounded } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-import CompanyBackground from '../../../static/icons/companyBackground.svg';
+import React, { useState } from 'react';
+
 import CompanyLogo from '../../../static/icons/companyLogo.jpeg';
 import { IJobs } from '../../../typings/jobs';
 import ApplicationForm from './ApplicationForm';

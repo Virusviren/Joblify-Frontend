@@ -1,7 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
-
-import { IJobs } from '../../typings/jobs';
+import { createSlice } from '@reduxjs/toolkit';
 
 // InterFaces
 

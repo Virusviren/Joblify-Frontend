@@ -117,6 +117,7 @@ const CandidateAppliedJobs = () => {
               lg={2}
               style={{
                 boxShadow: '0px 4px 20px 2px rgba(0, 0, 0, 0.1)',
+                height: '100vh',
               }}
             >
               <img
