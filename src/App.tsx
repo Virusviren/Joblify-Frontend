@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import './App.css';
 import Home from './routes/home/Home';

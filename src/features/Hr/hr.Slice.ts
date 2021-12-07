@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { IappliedJobsApplications } from '../../typings/appliedJobsApplications';
 import { Ihrinfo } from '../../typings/hr';
 import { IJobs } from '../../typings/jobs';

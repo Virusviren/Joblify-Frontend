@@ -33,8 +33,6 @@ const MainSection = () => {
   //fetch(`${BASE_URL}all-jobs`).then((res) => res.json())
   //);
 
-  console.log('here!');
-
   const fetchJobs = async () => {
     try {
       const resp = await fetch(`${BASE_URL}all-jobs`);
@@ -82,23 +80,6 @@ const MainSection = () => {
       });
     }
   }, [data]);
-
-  useEffect(() => {
-    // console.log(filters);
-
-    if (!isFetching) {
-      const resultsType = filters?.map((item) => {
-        return data.filter((job: IJobs) => job.type === item);
-      });
-      const resultsLevel = filters.map((item) => {
-        return data.filter((job: IJobs) => job.seniorityLevel === item);
-      });
-
-      const resultsSalary = filters.map((item) => {
-        return data.filter((job: IJobs) => job.salary === item);
-      });
-    }
-  }, [filters]);
 
   useEffect(() => {
     fetchJobs();

@@ -36,7 +36,7 @@ const JobCard = ({
     //   };
     // });
     setActiveJobDetails(jobItem._id);
-  }, [filters]);
+  }, []);
 
   const matches = useMediaQuery('(max-width:1535px)');
   return (
